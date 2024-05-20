@@ -1,4 +1,4 @@
-rm -rf xray
+rm -rf sing-box
 clear
 NC='\e[0m'
 DEFBOLD='\e[39;1m'
@@ -24,19 +24,15 @@ mkdir /tmp > /dev/null 2>&1
 clear
 vnstat --remove -i eth1 --force
 clear
-rm /usr/local/etc/xray/city > /dev/null 2>&1
-rm /usr/local/etc/xray/org > /dev/null 2>&1
-rm /usr/local/etc/xray/timezone > /dev/null 2>&1
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" - install --beta
-cp /usr/local/bin/xray /backup/xray.official.backup
-curl -s ipinfo.io/city >> /usr/local/etc/xray/city
-curl -s ipinfo.io/org | cut -d " " -f 2-10 >> /usr/local/etc/xray/org
-curl -s ipinfo.io/timezone >> /usr/local/etc/xray/timezone
+rm /usr/local/etc/sing-box/city > /dev/null 2>&1
+rm /usr/local/etc/sing-box/org > /dev/null 2>&1
+rm /usr/local/etc/sing-box/timezone > /dev/null 2>&1
+bash <(curl -Ls https://raw.githubusercontent.com/masjeho2/sing-box-yes/master/install.sh) install
+cp /usr/local/bin/sing-box /backup/sing-box.official.backup
+curl -s ipinfo.io/city >> /usr/local/etc/sing-box/city
+curl -s ipinfo.io/org | cut -d " " -f 2-10 >> /usr/local/etc/sing-box/org
+curl -s ipinfo.io/timezone >> /usr/local/etc/sing-box/timezone
 clear
-echo -e "${GB}[ INFO ]${NC} ${YB}Downloading Xray-core mod${NC}"
-sleep 0.5
-wget -q -O /backup/xray.mod.backup "https://github.com/dharak36/Xray-core/releases/download/v1.0.0/xray.linux.64bit"
-echo -e "${GB}[ INFO ]${NC} ${YB}Download Xray-core done${NC}"
 sleep 1
 cd
 clear
@@ -56,34 +52,34 @@ mkdir -p /var/www/html/trojan
 mkdir -p /var/www/html/shadowsocks
 mkdir -p /var/www/html/shadowsocks2022
 mkdir -p /var/www/html/socks5
-mkdir -p /var/www/html/allxray
+mkdir -p /var/www/html/allsing-box
 systemctl restart nginx
 clear
-touch /usr/local/etc/xray/domain
+touch /usr/local/etc/sing-box/domain
 echo -e "${YB}Input Domain${NC} "
 echo " "
 read -rp "Input your domain : " -e dns
 if [ -z $dns ]; then
 echo -e "Nothing input for domain!"
 else
-echo "$dns" > /usr/local/etc/xray/domain
+echo "$dns" > /usr/local/etc/sing-box/domain
 echo "DNS=$dns" > /var/lib/dnsvps.conf
 fi
 clear
 systemctl stop nginx
-domain=$(cat /usr/local/etc/xray/domain)
+domain=$(cat /usr/local/etc/sing-box/domain)
 curl https://get.acme.sh | sh
 source ~/.bashrc
 cd .acme.sh
-bash acme.sh --issue -d $domain --server letsencrypt --keylength ec-256 --fullchain-file /usr/local/etc/xray/fullchain.crt --key-file /usr/local/etc/xray/private.key --standalone --force
+bash acme.sh --issue -d $domain --server letsencrypt --keylength ec-256 --fullchain-file /usr/local/etc/sing-box/fullchain.crt --key-file /usr/local/etc/sing-box/private.key --standalone --force
 clear
-echo -e "${GB}[ INFO ]${NC} ${YB}Setup Nginx & Xray Conf${NC}"
-echo "UQ3w2q98BItd3DPgyctdoJw4cqQFmY59ppiDQdqMKbw=" > /usr/local/etc/xray/serverpsk
-wget -q -O /usr/local/etc/xray/config.json https://raw.githubusercontent.com/masjeho2/conf/main/config.json
+echo -e "${GB}[ INFO ]${NC} ${YB}Setup Nginx & sing-box Conf${NC}"
+echo "UQ3w2q98BItd3DPgyctdoJw4cqQFmY59ppiDQdqMKbw=" > /usr/local/etc/sing-box/serverpsk
+#wget -q -O /usr/local/etc/sing-box/config.json https://raw.githubusercontent.com/masjeho2/conf/main/config.json
 wget -q -O /etc/nginx/nginx.conf https://raw.githubusercontent.com/masjeho2/conf/main/nginx.conf
-wget -q -O /etc/nginx/conf.d/xray.conf https://raw.githubusercontent.com/masjeho2/conf/main/xray.conf
+wget -q -O /etc/nginx/conf.d/sing-box.conf https://raw.githubusercontent.com/masjeho2/conf/main/sing-box.conf
 systemctl restart nginx
-systemctl restart xray
+systemctl restart sing-box
 echo -e "${GB}[ INFO ]${NC} ${YB}Setup Done${NC}"
 sleep 2
 clear
@@ -138,82 +134,82 @@ net.ipv4.tcp_max_orphans = 32768
 net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
 cd /usr/bin
 echo -e "${GB}[ INFO ]${NC} ${YB}Downloading Main Menu${NC}"
-wget -q -O menu "https://raw.githubusercontent.com/masjeho2/v1/main/menu/menu.sh"
-wget -q -O vmess "https://raw.githubusercontent.com/masjeho2/v1/main/menu/vmess.sh"
-wget -q -O vless "https://raw.githubusercontent.com/masjeho2/v1/main/menu/vless.sh"
-wget -q -O trojan "https://raw.githubusercontent.com/masjeho2/v1/main/menu/trojan.sh"
-wget -q -O shadowsocks "https://raw.githubusercontent.com/masjeho2/v1/main/menu/shadowsocks.sh"
-wget -q -O shadowsocks2022 "https://raw.githubusercontent.com/masjeho2/v1/main/menu/shadowsocks2022.sh"
-wget -q -O socks "https://raw.githubusercontent.com/masjeho2/v1/main/menu/socks.sh"
-wget -q -O allxray "https://raw.githubusercontent.com/masjeho2/v1/main/menu/allxray.sh"
+wget -q -O menu "https://raw.githubusercontent.com/masjeho2/v1/sing-box/menu/menu.sh"
+wget -q -O vmess "https://raw.githubusercontent.com/masjeho2/v1/sing-box/menu/vmess.sh"
+wget -q -O vless "https://raw.githubusercontent.com/masjeho2/v1/sing-box/menu/vless.sh"
+wget -q -O trojan "https://raw.githubusercontent.com/masjeho2/v1/sing-box/menu/trojan.sh"
+wget -q -O shadowsocks "https://raw.githubusercontent.com/masjeho2/v1/sing-box/menu/shadowsocks.sh"
+wget -q -O shadowsocks2022 "https://raw.githubusercontent.com/masjeho2/v1/sing-box/menu/shadowsocks2022.sh"
+wget -q -O socks "https://raw.githubusercontent.com/masjeho2/v1/sing-box/menu/socks.sh"
+wget -q -O allsing-box "https://raw.githubusercontent.com/masjeho2/v1/sing-box/menu/allsing-box.sh"
 sleep 0.5
 echo -e "${GB}[ INFO ]${NC} ${YB}Downloading Menu Vmess${NC}"
-wget -q -O add-vmess "https://raw.githubusercontent.com/masjeho2/v1/main/vmess/add-vmess.sh"
-wget -q -O del-vmess "https://raw.githubusercontent.com/masjeho2/v1/main/vmess/del-vmess.sh"
-wget -q -O extend-vmess "https://raw.githubusercontent.com/masjeho2/v1/main/vmess/extend-vmess.sh"
-wget -q -O trialvmess "https://raw.githubusercontent.com/masjeho2/v1/main/vmess/trialvmess.sh"
-wget -q -O cek-vmess "https://raw.githubusercontent.com/masjeho2/v1/main/vmess/cek-vmess.sh" 
+wget -q -O add-vmess "https://raw.githubusercontent.com/masjeho2/v1/sing-box/vmess/add-vmess.sh"
+wget -q -O del-vmess "https://raw.githubusercontent.com/masjeho2/v1/sing-box/vmess/del-vmess.sh"
+wget -q -O extend-vmess "https://raw.githubusercontent.com/masjeho2/v1/sing-box/vmess/extend-vmess.sh"
+wget -q -O trialvmess "https://raw.githubusercontent.com/masjeho2/v1/sing-box/vmess/trialvmess.sh"
+wget -q -O cek-vmess "https://raw.githubusercontent.com/masjeho2/v1/sing-box/vmess/cek-vmess.sh" 
 sleep 0.5
 echo -e "${GB}[ INFO ]${NC} ${YB}Downloading Menu Vless${NC}"
-wget -q -O add-vless "https://raw.githubusercontent.com/masjeho2/v1/main/vless/add-vless.sh"
-wget -q -O del-vless "https://raw.githubusercontent.com/masjeho2/v1/main/vless/del-vless.sh"
-wget -q -O extend-vless "https://raw.githubusercontent.com/masjeho2/v1/main/vless/extend-vless.sh"
-wget -q -O trialvless "https://raw.githubusercontent.com/masjeho2/v1/main/vless/trialvless.sh"
-wget -q -O cek-vless "https://raw.githubusercontent.com/masjeho2/v1/main/vless/cek-vless.sh"
+wget -q -O add-vless "https://raw.githubusercontent.com/masjeho2/v1/sing-box/vless/add-vless.sh"
+wget -q -O del-vless "https://raw.githubusercontent.com/masjeho2/v1/sing-box/vless/del-vless.sh"
+wget -q -O extend-vless "https://raw.githubusercontent.com/masjeho2/v1/sing-box/vless/extend-vless.sh"
+wget -q -O trialvless "https://raw.githubusercontent.com/masjeho2/v1/sing-box/vless/trialvless.sh"
+wget -q -O cek-vless "https://raw.githubusercontent.com/masjeho2/v1/sing-box/vless/cek-vless.sh"
 sleep 0.5
 echo -e "${GB}[ INFO ]${NC} ${YB}Downloading Menu Trojan${NC}"
-wget -q -O add-trojan "https://raw.githubusercontent.com/masjeho2/v1/main/trojan/add-trojan.sh"
-wget -q -O del-trojan "https://raw.githubusercontent.com/masjeho2/v1/main/trojan/del-trojan.sh"
-wget -q -O extend-trojan "https://raw.githubusercontent.com/masjeho2/v1/main/trojan/extend-trojan.sh"
-wget -q -O trialtrojan "https://raw.githubusercontent.com/masjeho2/v1/main/trojan/trialtrojan.sh"
-wget -q -O cek-trojan "https://raw.githubusercontent.com/masjeho2/v1/main/trojan/cek-trojan.sh"
+wget -q -O add-trojan "https://raw.githubusercontent.com/masjeho2/v1/sing-box/trojan/add-trojan.sh"
+wget -q -O del-trojan "https://raw.githubusercontent.com/masjeho2/v1/sing-box/trojan/del-trojan.sh"
+wget -q -O extend-trojan "https://raw.githubusercontent.com/masjeho2/v1/sing-box/trojan/extend-trojan.sh"
+wget -q -O trialtrojan "https://raw.githubusercontent.com/masjeho2/v1/sing-box/trojan/trialtrojan.sh"
+wget -q -O cek-trojan "https://raw.githubusercontent.com/masjeho2/v1/sing-box/trojan/cek-trojan.sh"
 sleep 0.5
 echo -e "${GB}[ INFO ]${NC} ${YB}Downloading Menu Shadowsocks${NC}"
-wget -q -O add-ss "https://github.com/masjeho2/v1/main/shadowsocks/add-ss.sh"
-wget -q -O del-ss "https://github.com/masjeho2/v1/main/shadowsocks/del-ss.sh"
-wget -q -O extend-ss "https://github.com/masjeho2/v1/main/shadowsocks/extend-ss.sh"
-wget -q -O trialss "https://github.com/masjeho2/v1/main/shadowsocks/trial-ss.sh"
-wget -q -O cek-ss "https://github.com/masjeho2/v1/main/shadowsocks/cek-ss.sh"
+wget -q -O add-ss "https://github.com/masjeho2/v1/sing-box/shadowsocks/add-ss.sh"
+wget -q -O del-ss "https://github.com/masjeho2/v1/sing-box/shadowsocks/del-ss.sh"
+wget -q -O extend-ss "https://github.com/masjeho2/v1/sing-box/shadowsocks/extend-ss.sh"
+wget -q -O trialss "https://github.com/masjeho2/v1/sing-box/shadowsocks/trial-ss.sh"
+wget -q -O cek-ss "https://github.com/masjeho2/v1/sing-box/shadowsocks/cek-ss.sh"
 sleep 0.5
 echo -e "${GB}[ INFO ]${NC} ${YB}Downloading Menu Shadowsocks 2022${NC}"
-wget -q -O add-ss2022 "https://raw.githubusercontent.com/masjeho2/v1/main/shadowsocks2022/add-ss2022.sh"
-wget -q -O del-ss2022 "https://raw.githubusercontent.com/masjeho2/v1/main/shadowsocks2022/del-ss2022.sh"
-wget -q -O extend-ss2022 "https://raw.githubusercontent.com/masjeho2/v1/main/shadowsocks2022/extend-ss2022.sh"
-wget -q -O trialss2022 "https://raw.githubusercontent.com/masjeho2/v1/main/shadowsocks2022/trialss2022.sh"
-wget -q -O cek-ss2022 "https://raw.githubusercontent.com/masjeho2/v1/main/shadowsocks2022/cek-ss2022.sh"
+wget -q -O add-ss2022 "https://raw.githubusercontent.com/masjeho2/v1/sing-box/shadowsocks2022/add-ss2022.sh"
+wget -q -O del-ss2022 "https://raw.githubusercontent.com/masjeho2/v1/sing-box/shadowsocks2022/del-ss2022.sh"
+wget -q -O extend-ss2022 "https://raw.githubusercontent.com/masjeho2/v1/sing-box/shadowsocks2022/extend-ss2022.sh"
+wget -q -O trialss2022 "https://raw.githubusercontent.com/masjeho2/v1/sing-box/shadowsocks2022/trialss2022.sh"
+wget -q -O cek-ss2022 "https://raw.githubusercontent.com/masjeho2/v1/sing-box/shadowsocks2022/cek-ss2022.sh"
 sleep 0.5
 echo -e "${GB}[ INFO ]${NC} ${YB}Downloading Menu Socks5${NC}"
-wget -q -O add-socks "https://raw.githubusercontent.com/masjeho2/v1/main/socks/add-socks.sh"
-wget -q -O del-socks "https://raw.githubusercontent.com/masjeho2/v1/main/socks/del-socks.sh"
-wget -q -O extend-socks "https://raw.githubusercontent.com/masjeho2/v1/main/socks/extend-socks.sh"
-wget -q -O trialsocks "https://raw.githubusercontent.com/masjeho2/v1/main/socks/trialsocks.sh"
-wget -q -O cek-socks "https://raw.githubusercontent.com/masjeho2/v1/main/socks/cek-socks.sh"
+wget -q -O add-socks "https://raw.githubusercontent.com/masjeho2/v1/sing-box/socks/add-socks.sh"
+wget -q -O del-socks "https://raw.githubusercontent.com/masjeho2/v1/sing-box/socks/del-socks.sh"
+wget -q -O extend-socks "https://raw.githubusercontent.com/masjeho2/v1/sing-box/socks/extend-socks.sh"
+wget -q -O trialsocks "https://raw.githubusercontent.com/masjeho2/v1/sing-box/socks/trialsocks.sh"
+wget -q -O cek-socks "https://raw.githubusercontent.com/masjeho2/v1/sing-box/socks/cek-socks.sh"
 sleep 0.5
-echo -e "${GB}[ INFO ]${NC} ${YB}Downloading Menu All Xray${NC}"
-wget -q -O add-xray "https://raw.githubusercontent.com/masjeho2/v1/main/allxray/add-xray.sh"
-wget -q -O del-xray "https://raw.githubusercontent.com/masjeho2/v1/main/allxray/del-xray.sh"
-wget -q -O extend-xray "https://raw.githubusercontent.com/masjeho2/v1/main/allxray/extend-xray.sh"
-wget -q -O trialxray "https://raw.githubusercontent.com/masjeho2/v1/main/allxray/trialxray.sh"
-wget -q -O cek-xray "https://raw.githubusercontent.com/masjeho2/v1/main/allxray/cek-xray.sh"
+echo -e "${GB}[ INFO ]${NC} ${YB}Downloading Menu All sing-box${NC}"
+wget -q -O add-sing-box "https://raw.githubusercontent.com/masjeho2/v1/sing-box/allsing-box/add-sing-box.sh"
+wget -q -O del-sing-box "https://raw.githubusercontent.com/masjeho2/v1/sing-box/allsing-box/del-sing-box.sh"
+wget -q -O extend-sing-box "https://raw.githubusercontent.com/masjeho2/v1/sing-box/allsing-box/extend-sing-box.sh"
+wget -q -O trialsing-box "https://raw.githubusercontent.com/masjeho2/v1/sing-box/allsing-box/trialsing-box.sh"
+wget -q -O cek-sing-box "https://raw.githubusercontent.com/masjeho2/v1/sing-box/allsing-box/cek-sing-box.sh"
 sleep 0.5
 echo -e "${GB}[ INFO ]${NC} ${YB}Downloading Menu Log${NC}"
-wget -q -O log-create "https://raw.githubusercontent.com/masjeho2/v1/main/log/log-create.sh"
-wget -q -O log-vmess "https://raw.githubusercontent.com/masjeho2/v1/main/log/log-vmess.sh"
-wget -q -O log-vless "https://raw.githubusercontent.com/masjeho2/v1/main/log/log-vless.sh"
-wget -q -O log-trojan "https://raw.githubusercontent.com/masjeho2/v1/main/log/log-trojan.sh"
-wget -q -O log-ss "https://raw.githubusercontent.com/masjeho2/v1/main/log/log-ss.sh"
-wget -q -O log-ss2022 "https://raw.githubusercontent.com/masjeho2/v1/main/log/log-ss2022.sh"
-wget -q -O log-socks "https://raw.githubusercontent.com/masjeho2/v1/main/log/log-socks.sh"
-wget -q -O log-allxray "https://raw.githubusercontent.com/masjeho2/v1/main/log/log-allxray.sh"
+wget -q -O log-create "https://raw.githubusercontent.com/masjeho2/v1/sing-box/log/log-create.sh"
+wget -q -O log-vmess "https://raw.githubusercontent.com/masjeho2/v1/sing-box/log/log-vmess.sh"
+wget -q -O log-vless "https://raw.githubusercontent.com/masjeho2/v1/sing-box/log/log-vless.sh"
+wget -q -O log-trojan "https://raw.githubusercontent.com/masjeho2/v1/sing-box/log/log-trojan.sh"
+wget -q -O log-ss "https://raw.githubusercontent.com/masjeho2/v1/sing-box/log/log-ss.sh"
+wget -q -O log-ss2022 "https://raw.githubusercontent.com/masjeho2/v1/sing-box/log/log-ss2022.sh"
+wget -q -O log-socks "https://raw.githubusercontent.com/masjeho2/v1/sing-box/log/log-socks.sh"
+wget -q -O log-allsing-box "https://raw.githubusercontent.com/masjeho2/v1/sing-box/log/log-allsing-box.sh"
 sleep 0.5
 echo -e "${GB}[ INFO ]${NC} ${YB}Downloading Other Menu${NC}"
-wget -q -O xp "https://raw.githubusercontent.com/masjeho2/v1/main/other/xp.sh"
-wget -q -O dns "https://raw.githubusercontent.com/masjeho2/v1/main/other/dns.sh"
-wget -q -O certxray "https://raw.githubusercontent.com/masjeho2/v1/main/other/certxray.sh"
-wget -q -O xraymod "https://raw.githubusercontent.com/masjeho2/v1/main/other/xraymod.sh"
-wget -q -O xrayofficial "https://raw.githubusercontent.com/masjeho2/v1/main/other/xrayofficial.sh"
-wget -q -O about "https://raw.githubusercontent.com/masjeho2/v1/main/other/about.sh"
-wget -q -O clear-log "https://raw.githubusercontent.com/masjeho2/v1/main/other/clear-log.sh"
+wget -q -O xp "https://raw.githubusercontent.com/masjeho2/v1/sing-box/other/xp.sh"
+wget -q -O dns "https://raw.githubusercontent.com/masjeho2/v1/sing-box/other/dns.sh"
+wget -q -O certsing-box "https://raw.githubusercontent.com/masjeho2/v1/sing-box/other/certsing-box.sh"
+wget -q -O sing-boxmod "https://raw.githubusercontent.com/masjeho2/v1/sing-box/other/sing-boxmod.sh"
+wget -q -O sing-boxofficial "https://raw.githubusercontent.com/masjeho2/v1/sing-box/other/sing-boxofficial.sh"
+wget -q -O about "https://raw.githubusercontent.com/masjeho2/v1/sing-box/other/about.sh"
+wget -q -O clear-log "https://raw.githubusercontent.com/masjeho2/v1/sing-box/other/clear-log.sh"
 echo -e "${GB}[ INFO ]${NC} ${YB}Download All Menu Done${NC}"
 sleep 2
 chmod +x add-vmess
@@ -246,11 +242,11 @@ chmod +x del-socks
 chmod +x extend-socks
 chmod +x trialsocks
 chmod +x cek-socks
-chmod +x add-xray
-chmod +x del-xray
-chmod +x extend-xray
-chmod +x trialxray
-chmod +x cek-xray
+chmod +x add-sing-box
+chmod +x del-sing-box
+chmod +x extend-sing-box
+chmod +x trialsing-box
+chmod +x cek-sing-box
 chmod +x log-create
 chmod +x log-vmess
 chmod +x log-vless
@@ -258,7 +254,7 @@ chmod +x log-trojan
 chmod +x log-ss
 chmod +x log-ss2022
 chmod +x log-socks
-chmod +x log-allxray
+chmod +x log-allsing-box
 chmod +x menu
 chmod +x vmess
 chmod +x vless
@@ -266,12 +262,12 @@ chmod +x trojan
 chmod +x shadowsocks
 chmod +x shadowsocks2022
 chmod +x socks
-chmod +x allxray
+chmod +x allsing-box
 chmod +x xp
 chmod +x dns
-chmod +x certxray
-chmod +x xraymod
-chmod +x xrayofficial
+chmod +x certsing-box
+chmod +x sing-boxmod
+chmod +x sing-boxofficial
 chmod +x about
 chmod +x clear-log
 cd
@@ -312,7 +308,7 @@ echo -e "  ${YB}- HTTPS : 443, 2053, 2083, 2087, 2096, 8443${NC}"
 echo -e "  ${YB}- HTTP  : 80, 8080, 8880, 2052, 2082, 2086, 2095${NC}"
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
 echo ""
-rm -f xray
+rm -f sing-box
 secs_to_human "$(($(date +%s) - ${start}))"
 echo -e "${YB}[ WARNING ] reboot now ? (Y/N)${NC} "
 read answer
