@@ -8,13 +8,13 @@ MB='\e[35;1m'
 CB='\e[35;1m'
 WB='\e[37;1m'
 clear
-domain=$(cat /usr/local/etc/xray/domain)
+domain=$(cat /usr/local/etc/sing-box/domain)
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
 echo -e "                 ${WB}Add Vmess Account${NC}                  "
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
 read -rp "User: " -e user
-CLIENT_EXISTS=$(grep -w $user /usr/local/etc/xray/config.json | wc -l)
+CLIENT_EXISTS=$(grep -w $user /usr/local/etc/sing-box/config.json | wc -l)
 if [[ ${CLIENT_EXISTS} == '1' ]]; then
 clear
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
@@ -26,13 +26,17 @@ read -n 1 -s -r -p "Press any key to back on menu"
 add-vmess
 fi
 done
-uuid=$(cat /proc/sys/kernel/random/uuid)
+uuid=$(cat /proc/sys/kernel/random/uuid | md5sum | cut -c -10)
 read -p "Expired (days): " masaaktif
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
+
+# Add user to vmess
 sed -i '/#vmess$/a\#@ '"$user $exp"'\
-},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/config.json
+},{"name": "'""$user""'", "uuid": "'""$uuid""'", "alterId": 0' /usr/local/etc/sing-box/config.json
+
+# Add user to vmess grpc
 sed -i '/#vmess-grpc$/a\#@ '"$user $exp"'\
-},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/config.json
+},{"name": "'""$user""'", "uuid": "'""$uuid""'", "alterId": 0' /usr/local/etc/sing-box/config.json
 vlink1=`cat << EOF
 {
 "v": "2",
@@ -81,12 +85,12 @@ EOF`
 vmesslink1="vmess://$(echo $vlink1 | base64 -w 0)"
 vmesslink2="vmess://$(echo $vlink2 | base64 -w 0)"
 vmesslink3="vmess://$(echo $vlink3 | base64 -w 0)"
-ISP=$(cat /usr/local/etc/xray/org)
-CITY=$(cat /usr/local/etc/xray/city)
+ISP=$(cat /usr/local/etc/sing-box/org)
+CITY=$(cat /usr/local/etc/sing-box/city)
 cat > /var/www/html/vmess/vmess-$user.txt << END
 ____________________________________________________
 
-           _____ [ Xray / Vmess ] _____                 
+           _____ [ sing-box / Vmess ] _____                 
 ____________________________________________________
 Remarks       : $user
 Domain        : $domain
@@ -179,10 +183,10 @@ ____________________________________________________
 Link gRPC : vmess://$(echo $vlink3 | base64 -w 0)
 ____________________________________________________
 END
-systemctl restart xray
+systemctl restart sing-box
 clear
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-vmess-$user.txt
-echo -e "━━━━━ [ Xray / Vmess ] ━━━━━" | tee -a /user/log-vmess-$user.txt
+echo -e "━━━━━ [ sing-box / Vmess ] ━━━━━" | tee -a /user/log-vmess-$user.txt
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-vmess-$user.txt
 echo -e "Remarks       : $user" | tee -a /user/log-vmess-$user.txt
 echo -e "Domain        : $domain" | tee -a /user/log-vmess-$user.txt

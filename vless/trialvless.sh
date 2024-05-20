@@ -1,23 +1,23 @@
-domain=$(cat /usr/local/etc/xray/domain)
+domain=$(cat /usr/local/etc/sing-box/domain)
 user=trial-`echo $RANDOM | head -c4`
-uuid=$(cat /proc/sys/kernel/random/uuid)
+uuid=$(cat /proc/sys/kernel/random/uuid | md5sum | cut -c -10)
 masaaktif=1
 echo ""
 echo ""
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vless$/a\#= '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/config.json
+},{"name": "'""$user""'", "uuid": "'""$uuid""'"' /usr/local/etc/sing-box/config.json
 sed -i '/#vless-grpc$/a\#= '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/config.json
+},{"name": "'""$user""'", "uuid": "'""$uuid""'"' /usr/local/etc/sing-box/config.json
 vlesslink1="vless://$uuid@$domain:443?path=/vless&security=tls&encryption=none&host=$domain&type=ws&sni=$domain#$user"
 vlesslink2="vless://$uuid@$domain:80?path=/vless&security=none&encryption=none&host=$domain&type=ws#$user"
 vlesslink3="vless://$uuid@$domain:443?security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=$domain#$user"
-ISP=$(cat /usr/local/etc/xray/org)
-CITY=$(cat /usr/local/etc/xray/city)
+ISP=$(cat /usr/local/etc/sing-box/org)
+CITY=$(cat /usr/local/etc/sing-box/city)
 cat > /var/www/html/vless/vless-$user.txt << END
 ____________________________________________________
 
-         _____ [ Trial Xray / Vless ] _____                 
+         _____ [ Trial sing-box / Vless ] _____                 
 ____________________________________________________
 Remarks       : $user
 Domain        : $domain
@@ -105,10 +105,10 @@ ____________________________________________________
 Link gRPC : vless://$uuid@$domain:443?security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=$domain#$user
 ____________________________________________________
 END
-systemctl restart xray
+systemctl restart sing-box
 clear
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-vless-$user.txt
-echo -e "━━━━━ [ Trial Xray / Vless ] ━━━━━" | tee -a /user/log-vless-$user.txt
+echo -e "━━━━━ [ Trial sing-box / Vless ] ━━━━━" | tee -a /user/log-vless-$user.txt
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-vless-$user.txt
 echo -e "Remarks       : $user" | tee -a /user/log-vless-$user.txt
 echo -e "Domain        : $domain" | tee -a /user/log-vless-$user.txt

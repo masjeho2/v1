@@ -1,14 +1,14 @@
-domain=$(cat /usr/local/etc/xray/domain)
+domain=$(cat /usr/local/etc/sing-box/domain)
 user=trial-`echo $RANDOM | head -c4`
-uuid=$(cat /proc/sys/kernel/random/uuid)
+uuid=$(cat /proc/sys/kernel/random/uuid | md5sum | cut -c -10)
 masaaktif=1
 echo ""
 echo ""
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vmess$/a\#@ '"$user $exp"'\
-},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/config.json
+},{"name": "'""$user""'", "uuid": "'""$uuid""'", "alterId": 0' /usr/local/etc/sing-box/config.json
 sed -i '/#vmess-grpc$/a\#@ '"$user $exp"'\
-},{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /usr/local/etc/xray/config.json
+},{"name": "'""$user""'", "uuid": "'""$uuid""'", "alterId": 0' /usr/local/etc/sing-box/config.json
 vlink1=`cat<<EOF
 {
 "v": "2",
@@ -57,12 +57,12 @@ EOF`
 vmesslink1="vmess://$(echo $vlink1 | base64 -w 0)"
 vmesslink2="vmess://$(echo $vlink2 | base64 -w 0)"
 vmesslink3="vmess://$(echo $vlink3 | base64 -w 0)"
-ISP=$(cat /usr/local/etc/xray/org)
-CITY=$(cat /usr/local/etc/xray/city)
+ISP=$(cat /usr/local/etc/sing-box/org)
+CITY=$(cat /usr/local/etc/sing-box/city)
 cat > /var/www/html/vmess/vmess-$user.txt << END
 ____________________________________________________
 
-        _____ [ Trial Xray / Vmess ] _____                 
+        _____ [ Trial sing-box / Vmess ] _____                 
 ____________________________________________________
 Remarks       : $user
 Domain        : $domain
@@ -155,10 +155,10 @@ ____________________________________________________
 Link gRPC : vmess://$(echo $vlink3 | base64 -w 0)
 ____________________________________________________
 END
-systemctl restart xray
+systemctl restart sing-box
 clear
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-vmess-$user.txt
-echo -e "━━━━━ [ Trial Xray / Vmess ] ━━━━━" | tee -a /user/log-vmess-$user.txt
+echo -e "━━━━━ [ Trial sing-box / Vmess ] ━━━━━" | tee -a /user/log-vmess-$user.txt
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-vmess-$user.txt
 echo -e "Remarks       : $user" | tee -a /user/log-vmess-$user.txt
 echo -e "Domain        : $domain" | tee -a /user/log-vmess-$user.txt

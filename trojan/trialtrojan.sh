@@ -1,23 +1,23 @@
-domain=$(cat /usr/local/etc/xray/domain)
+domain=$(cat /usr/local/etc/sing-box/domain)
 user=trial-`echo $RANDOM | head -c4`
-uuid=$(cat /proc/sys/kernel/random/uuid)
+uuid=$(cat /proc/sys/kernel/random/uuid | md5sum | cut -c -10)
 masaaktif=1
 echo ""
 echo ""
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#trojan$/a\#& '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/config.json
+},{"name": "'""$user""'", "password": "'""$uuid""'"' /usr/local/etc/sing-box/config.json
 sed -i '/#trojan-grpc$/a\#& '"$user $exp"'\
-},{"password": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/config.json
+},{"name": "'""$user""'", "password": "'""$uuid""'"' /usr/local/etc/sing-box/config.json
 trojanlink1="trojan://$uuid@$domain:443?path=/trojan&security=tls&host=$domain&type=ws&sni=$domain#$user"
 trojanlink2="trojan://${uuid}@$domain:80?path=/trojan&security=none&host=$domain&type=ws#$user"
 trojanlink3="trojan://${uuid}@$domain:443?security=tls&encryption=none&type=grpc&serviceName=trojan-grpc&sni=$domain#$user"
-ISP=$(cat /usr/local/etc/xray/org)
-CITY=$(cat /usr/local/etc/xray/city)
+ISP=$(cat /usr/local/etc/sing-box/org)
+CITY=$(cat /usr/local/etc/sing-box/city)
 cat > /var/www/html/trojan/trojan-$user.txt << END
 ____________________________________________________
 
-        _____ [ Trial Xray / Trojan ] _____                 
+        _____ [ Trial sing-box / Trojan ] _____                 
 ____________________________________________________
 Remarks       : $user
 Host/IP       : $domain
@@ -71,7 +71,7 @@ ____________________________________________________
     grpc-service-name: "trojan-grpc"
 
 ____________________________________________________
-        _____ [ Link Xray / Trojan ] _____
+        _____ [ Link sing-box / Trojan ] _____
 ____________________________________________________
 Link TLS  : trojan://$uuid@$domain:443?path=/trojan&security=tls&host=$domain&type=ws&sni=$domain#$user
 ____________________________________________________
@@ -80,10 +80,10 @@ ____________________________________________________
 Link gRPC : trojan://${uuid}@$domain:443?security=tls&encryption=none&type=grpc&serviceName=trojan-grpc&sni=$domain#$user
 ____________________________________________________
 END
-systemctl restart xray
+systemctl restart sing-box
 clear
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-trojan-$user.txt
-echo -e "━━━━━ [ Trial Xray / Trojan ] ━━━━━" | tee -a /user/log-trojan-$user.txt
+echo -e "━━━━━ [ Trial sing-box / Trojan ] ━━━━━" | tee -a /user/log-trojan-$user.txt
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-trojan-$user.txt
 echo -e "Remarks       : $user" | tee -a /user/log-trojan-$user.txt
 echo -e "Host/IP       : $domain" | tee -a /user/log-trojan-$user.txt

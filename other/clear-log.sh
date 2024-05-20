@@ -1,1 +1,1 @@
-echo > /var/log/xray/access.log
+echo > /var/log/sing-box/sing-box.log

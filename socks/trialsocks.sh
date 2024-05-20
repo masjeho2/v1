@@ -1,4 +1,4 @@
-domain=$(cat /usr/local/etc/xray/domain)
+domain=$(cat /usr/local/etc/sing-box/domain)
 user=trial-`echo $RANDOM | head -c4`
 pass=`echo $RANDOM | head -c4`
 masaaktif=1
@@ -6,17 +6,17 @@ echo ""
 echo ""
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#socks$/a\#÷ '"$user $exp"'\
-},{"user": "'""$user""'","pass": "'""$pass""'","email": "'""$user""'"' /usr/local/etc/xray/config.json
+},{"username": "'""$user""'", "password": "'""$pass""'"' /usr/local/etc/sing-box/config.json
 sed -i '/#socks-grpc$/a\#÷ '"$user $exp"'\
-},{"user": "'""$user""'","pass": "'""$pass""'","email": "'""$user""'"' /usr/local/etc/xray/config.json
+},{"username": "'""$user""'", "password": "'""$pass""'"' /usr/local/etc/sing-box/config.json
 echo -n "$user:$pass" | base64 > /tmp/log
 socks_base64=$(cat /tmp/log)
 sockslink1="socks://$socks_base64@$domain:443?path=/socks5&security=tls&host=$domain&type=ws&sni=$domain#$user"
 sockslink2="socks://$socks_base64@$domain:80?path=/socks5&security=none&host=$domain&type=ws#$user"
 sockslink3="socks://$socks_base64@$domain:443?security=tls&encryption=none&type=grpc&serviceName=socks5-grpc&sni=$domain#$user"
 rm -rf /tmp/log
-ISP=$(cat /usr/local/etc/xray/org)
-CITY=$(cat /usr/local/etc/xray/city)
+ISP=$(cat /usr/local/etc/sing-box/org)
+CITY=$(cat /usr/local/etc/sing-box/city)
 cat > /var/www/html/socks5/socks5-$user.txt << EOF
 ____________________________________________________
 
@@ -81,7 +81,7 @@ ____________________________________________________
 "path": "/socks5"
 }
 },
-"tag": "XRAY"
+"tag": "sing-box"
 }
 ],
 "policy": {
@@ -108,7 +108,7 @@ ____________________________________________________
 Link gRPC : socks://$socks_base64@$domain:443?security=tls&encryption=none&type=grpc&serviceName=socks5-grpc&sni=$domain#$user
 ____________________________________________________
 EOF
-systemctl restart xray
+systemctl restart sing-box
 clear
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-socks5-$user.txt
 echo -e "━━━━━ [ Trial Socks5 ] ━━━━━" | tee -a /user/log-socks5-$user.txt

@@ -9,7 +9,7 @@ CB='\e[35;1m'
 WB='\e[37;1m'
 clear
 echo -n >/tmp/other.txt
-data=($(cat /usr/local/etc/xray/config.json | grep '^#÷' | cut -d ' ' -f 2 | sort | uniq))
+data=($(cat /usr/local/etc/sing-box/config.json | grep '^#÷' | cut -d ' ' -f 2 | sort | uniq))
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
 echo -e "              ${WB}Socks5 User Login Account${NC}             "
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
@@ -18,9 +18,9 @@ if [[ -z "$akun" ]]; then
 akun="Tidak Ada"
 fi
 echo -n >/tmp/ipvmess.txt
-data2=($(cat /var/log/xray/access.log | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq))
+data2=($(cat /var/log/sing-box/sing-box.log | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | sort | uniq))
 for ip in "${data2[@]}"; do
-jum=$(cat /var/log/xray/access.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | grep -w "$ip" | sort | uniq)
+jum=$(cat /var/log/sing-box/sing-box.log | grep -w "$akun" | tail -n 500 | cut -d " " -f 3 | sed 's/tcp://g' | cut -d ":" -f 1 | grep -w "$ip" | sort | uniq)
 if [[ "$jum" = "$ip" ]]; then
 echo "$jum" >>/tmp/ipvmess.txt
 else

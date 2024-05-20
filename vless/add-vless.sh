@@ -8,13 +8,13 @@ MB='\e[35;1m'
 CB='\e[35;1m'
 WB='\e[37;1m'
 clear
-domain=$(cat /usr/local/etc/xray/domain)
+domain=$(cat /usr/local/etc/sing-box/domain)
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
 echo -e "                  ${WB}Add Vless Account${NC}                 "
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
 read -rp "User: " -e user
-CLIENT_EXISTS=$(grep -w $user /usr/local/etc/xray/config.json | wc -l)
+CLIENT_EXISTS=$(grep -w $user /usr/local/etc/sing-box/config.json | wc -l)
 if [[ ${CLIENT_EXISTS} == '1' ]]; then
 clear
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
@@ -26,22 +26,22 @@ read -n 1 -s -r -p "Press any key to back on menu"
 add-vless
 fi
 done
-uuid=$(cat /proc/sys/kernel/random/uuid)
+uuid=$(cat /proc/sys/kernel/random/uuid | md5sum | cut -c -10)
 read -p "Expired (days): " masaaktif
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vless$/a\#= '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/config.json
+},{"name": "'""$user""'", "uuid": "'""$uuid""'"' /usr/local/etc/sing-box/config.json
 sed -i '/#vless-grpc$/a\#= '"$user $exp"'\
-},{"id": "'""$uuid""'","email": "'""$user""'"' /usr/local/etc/xray/config.json
+},{"name": "'""$user""'", "uuid": "'""$uuid""'"' /usr/local/etc/sing-box/config.json
 vlesslink1="vless://$uuid@$domain:443?path=/vless&security=tls&encryption=none&host=$domain&type=ws&sni=$domain#$user"
 vlesslink2="vless://$uuid@$domain:80?path=/vless&security=none&encryption=none&host=$domain&type=ws#$user"
 vlesslink3="vless://$uuid@$domain:443?security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=$domain#$user"
-ISP=$(cat /usr/local/etc/xray/org)
-CITY=$(cat /usr/local/etc/xray/city)
+ISP=$(cat /usr/local/etc/sing-box/org)
+CITY=$(cat /usr/local/etc/sing-box/city)
 cat > /var/www/html/vless/vless-$user.txt << END
 ____________________________________________________
 
-           _____ [ Xray / Vless ] _____                 
+           _____ [ sing-box / Vless ] _____                 
 ____________________________________________________
 Remarks       : $user
 Domain        : $domain
@@ -129,10 +129,10 @@ ____________________________________________________
 Link gRPC : vless://$uuid@$domain:443?security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=$domain#$user
 ____________________________________________________
 END
-systemctl restart xray
+systemctl restart sing-box
 clear
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-vless-$user.txt
-echo -e "━━━━━ [ Xray / Vless ] ━━━━━" | tee -a /user/log-vless-$user.txt
+echo -e "━━━━━ [ sing-box / Vless ] ━━━━━" | tee -a /user/log-vless-$user.txt
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-vless-$user.txt
 echo -e "Remarks       : $user" | tee -a /user/log-vless-$user.txt
 echo -e "Domain        : $domain" | tee -a /user/log-vless-$user.txt

@@ -8,13 +8,13 @@ MB='\e[35;1m'
 CB='\e[35;1m'
 WB='\e[37;1m'
 clear
-domain=$(cat /usr/local/etc/xray/domain)
+domain=$(cat /usr/local/etc/sing-box/domain)
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
 echo -e "                 ${WB}Add Socks5 Account${NC}                 "
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
 read -rp "Username: " -e user
-CLIENT_EXISTS=$(grep -w $user /usr/local/etc/xray/config.json | wc -l)
+CLIENT_EXISTS=$(grep -w $user /usr/local/etc/sing-box/config.json | wc -l)
 if [[ ${CLIENT_EXISTS} == '1' ]]; then
 clear
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
@@ -28,7 +28,7 @@ fi
 done
 until [[ $pass =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 read -rp "Password: " -e pass
-CLIENT_EXISTS=$(grep -w $pass /usr/local/etc/xray/config.json | wc -l)
+CLIENT_EXISTS=$(grep -w $pass /usr/local/etc/sing-box/config.json | wc -l)
 if [[ ${CLIENT_EXISTS} == '1' ]]; then
 clear
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
@@ -45,17 +45,17 @@ done
 read -p "Expired (days): " masaaktif
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#socks$/a\#÷ '"$user $exp"'\
-},{"user": "'""$user""'","pass": "'""$pass""'","email": "'""$user""'"' /usr/local/etc/xray/config.json
+},{"username": "'""$user""'", "password": "'""$pass""'"' /usr/local/etc/sing-box/config.json
 sed -i '/#socks-grpc$/a\#÷ '"$user $exp"'\
-},{"user": "'""$user""'","pass": "'""$pass""'","email": "'""$user""'"' /usr/local/etc/xray/config.json
+},{"username": "'""$user""'", "password": "'""$pass""'"' /usr/local/etc/sing-box/config.json
 echo -n "$user:$pass" | base64 > /tmp/log
 socks_base64=$(cat /tmp/log)
 sockslink1="socks://$socks_base64@$domain:443?path=/socks5&security=tls&host=$domain&type=ws&sni=$domain#$user"
 sockslink2="socks://$socks_base64@$domain:80?path=/socks5&security=none&host=$domain&type=ws#$user"
 sockslink3="socks://$socks_base64@$domain:443?security=tls&encryption=none&type=grpc&serviceName=socks5-grpc&sni=$domain#$user"
 rm -rf /tmp/log
-ISP=$(cat /usr/local/etc/xray/org)
-CITY=$(cat /usr/local/etc/xray/city)
+ISP=$(cat /usr/local/etc/sing-box/org)
+CITY=$(cat /usr/local/etc/sing-box/city)
 cat > /var/www/html/socks5/socks5-$user.txt << EOF
 ____________________________________________________
 
@@ -120,7 +120,7 @@ ____________________________________________________
 "path": "/socks5"
 }
 },
-"tag": "XRAY"
+"tag": "sing-box"
 }
 ],
 "policy": {
@@ -147,7 +147,7 @@ ____________________________________________________
 Link gRPC : socks://$socks_base64@$domain:443?security=tls&encryption=none&type=grpc&serviceName=socks5-grpc&sni=$domain#$user
 ____________________________________________________
 EOF
-systemctl restart xray
+systemctl restart sing-box
 clear
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-socks5-$user.txt
 echo -e "━━━━━ [ Socks5 ] ━━━━━" | tee -a /user/log-socks5-$user.txt

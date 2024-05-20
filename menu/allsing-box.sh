@@ -9,13 +9,13 @@ CB='\e[35;1m'
 WB='\e[37;1m'
 clear
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
-echo -e "             ${WB}━━━━━ [ All Xray Menu ] ━━━━━${NC}             "
+echo -e "             ${WB}━━━━━ [ All sing-box Menu ] ━━━━━${NC}             "
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
 echo -e ""
-echo -e " ${MB}[1]${NC} ${YB}Create Account All Xray${NC} "
-echo -e " ${MB}[2]${NC} ${YB}Trial Account All Xray${NC} "
-echo -e " ${MB}[3]${NC} ${YB}Extend Account All Xray${NC} "
-echo -e " ${MB}[4]${NC} ${YB}Delete Account All Xray${NC} "
+echo -e " ${MB}[1]${NC} ${YB}Create Account All sing-box${NC} "
+echo -e " ${MB}[2]${NC} ${YB}Trial Account All sing-box${NC} "
+echo -e " ${MB}[3]${NC} ${YB}Extend Account All sing-box${NC} "
+echo -e " ${MB}[4]${NC} ${YB}Delete Account All sing-box${NC} "
 echo -e " ${MB}[5]${NC} ${YB}Check User Login${NC} "
 echo -e ""
 echo -e " ${MB}[0]${NC} ${YB}Back To Menu${NC}"
@@ -25,12 +25,12 @@ echo -e ""
 read -p " Select menu :  "  opt
 echo -e ""
 case $opt in
-1) clear ; add-xray ; exit ;;
-2) clear ; trialxray ; exit ;;
-3) clear ; extend-xray ; exit ;;
-4) clear ; del-xray ; exit ;;
-5) clear ; cek-xray ; exit ;;
+1) clear ; add-sing-box ; exit ;;
+2) clear ; trialsing-box ; exit ;;
+3) clear ; extend-sing-box ; exit ;;
+4) clear ; del-sing-box ; exit ;;
+5) clear ; cek-sing-box ; exit ;;
 0) clear ; menu ; exit ;;
 x) exit ;;
-*) echo -e "salah tekan " ; sleep 1 ; xray ;;
+*) echo -e "salah tekan " ; sleep 1 ; sing-box ;;
 esac

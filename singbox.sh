@@ -53,6 +53,7 @@ mkdir -p /var/www/html/shadowsocks
 mkdir -p /var/www/html/shadowsocks2022
 mkdir -p /var/www/html/socks5
 mkdir -p /var/www/html/allsing-box
+mkdir -p /var/log/sing-box
 systemctl restart nginx
 clear
 touch /usr/local/etc/sing-box/domain

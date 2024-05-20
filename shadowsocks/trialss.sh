@@ -1,23 +1,23 @@
-domain=$(cat /usr/local/etc/xray/domain)
+domain=$(cat /usr/local/etc/sing-box/domain)
 user=trial-`echo $RANDOM | head -c4`
 cipher="aes-256-gcm"
-uuid=$(cat /proc/sys/kernel/random/uuid)
+uuid=$(cat /proc/sys/kernel/random/uuid | md5sum | cut -c -10)
 masaaktif=1
 echo ""
 echo ""
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#shadowsocks$/a\#! '"$user $exp"'\
-},{"password": "'""$uuid""'","method": "'""$cipher""'","email": "'""$user""'"' /usr/local/etc/xray/config.json
+},{"method": "'""$cipher""'", "password": "'""$uuid""'", "multiplex": {}' /usr/local/etc/sing-box/config.json
 sed -i '/#shadowsocks-grpc$/a\#! '"$user $exp"'\
-},{"password": "'""$uuid""'","method": "'""$cipher""'","email": "'""$user""'"' /usr/local/etc/xray/config.json
+},{"method": "'""$cipher""'", "password": "'""$uuid""'", "multiplex": {}' /usr/local/etc/sing-box/config.json
 echo -n "$cipher:$uuid" | base64 -w 0 > /tmp/log
 ss_base64=$(cat /tmp/log)
 sslink1="ss://${ss_base64}@$domain:443?path=/shadowsocks&security=tls&host=${domain}&type=ws&sni=${domain}#${user}"
 sslink2="ss://${ss_base64}@$domain:80?path=/shadowsocks&security=none&host=${domain}&type=ws#${user}"
 sslink3="ss://${ss_base64}@$domain:443?security=tls&encryption=none&type=grpc&serviceName=shadowsocks-grpc&sni=$domain#${user}"
 rm -rf /tmp/log
-ISP=$(cat /usr/local/etc/xray/org)
-CITY=$(cat /usr/local/etc/xray/city)
+ISP=$(cat /usr/local/etc/sing-box/org)
+CITY=$(cat /usr/local/etc/sing-box/city)
 cat > /var/www/html/shadowsocks/shadowsocks-$user.txt << END
 ____________________________________________________
 
@@ -91,7 +91,7 @@ ____________________________________________________
 Link gRPC : ss://${ss_base64}@$domain:443?security=tls&encryption=none&type=grpc&serviceName=shadowsocks-grpc&sni=$domain#${user}
 ____________________________________________________
 END
-systemctl restart xray
+systemctl restart sing-box
 clear
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-ss-$user.txt
 echo -e "━━━━━ [ Trial Shadowsocks ] ━━━━━" | tee -a /user/log-ss-$user.txt
