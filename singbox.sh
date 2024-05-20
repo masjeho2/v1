@@ -165,20 +165,6 @@ wget -q -O extend-trojan "https://raw.githubusercontent.com/masjeho2/v1/sing-box
 wget -q -O trialtrojan "https://raw.githubusercontent.com/masjeho2/v1/sing-box/trojan/trialtrojan.sh"
 wget -q -O cek-trojan "https://raw.githubusercontent.com/masjeho2/v1/sing-box/trojan/cek-trojan.sh"
 sleep 0.5
-echo -e "${GB}[ INFO ]${NC} ${YB}Downloading Menu Shadowsocks${NC}"
-wget -q -O add-ss "https://github.com/masjeho2/v1/sing-box/shadowsocks/add-ss.sh"
-wget -q -O del-ss "https://github.com/masjeho2/v1/sing-box/shadowsocks/del-ss.sh"
-wget -q -O extend-ss "https://github.com/masjeho2/v1/sing-box/shadowsocks/extend-ss.sh"
-wget -q -O trialss "https://github.com/masjeho2/v1/sing-box/shadowsocks/trial-ss.sh"
-wget -q -O cek-ss "https://github.com/masjeho2/v1/sing-box/shadowsocks/cek-ss.sh"
-sleep 0.5
-echo -e "${GB}[ INFO ]${NC} ${YB}Downloading Menu Shadowsocks 2022${NC}"
-wget -q -O add-ss2022 "https://raw.githubusercontent.com/masjeho2/v1/sing-box/shadowsocks2022/add-ss2022.sh"
-wget -q -O del-ss2022 "https://raw.githubusercontent.com/masjeho2/v1/sing-box/shadowsocks2022/del-ss2022.sh"
-wget -q -O extend-ss2022 "https://raw.githubusercontent.com/masjeho2/v1/sing-box/shadowsocks2022/extend-ss2022.sh"
-wget -q -O trialss2022 "https://raw.githubusercontent.com/masjeho2/v1/sing-box/shadowsocks2022/trialss2022.sh"
-wget -q -O cek-ss2022 "https://raw.githubusercontent.com/masjeho2/v1/sing-box/shadowsocks2022/cek-ss2022.sh"
-sleep 0.5
 echo -e "${GB}[ INFO ]${NC} ${YB}Downloading Menu Socks5${NC}"
 wget -q -O add-socks "https://raw.githubusercontent.com/masjeho2/v1/sing-box/socks/add-socks.sh"
 wget -q -O del-socks "https://raw.githubusercontent.com/masjeho2/v1/sing-box/socks/del-socks.sh"
