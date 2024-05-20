@@ -2,7 +2,7 @@ domain=$(cat /usr/local/etc/sing-box/domain)
 user=trial-`echo $RANDOM | head -c4`
 pass=`echo $RANDOM | head -c4`
 masaaktif=1
-cipher="aes-256-gcm"
+
 uuid=$(cat /proc/sys/kernel/random/uuid | md5sum | cut -c -10)
 echo ""
 echo ""
@@ -13,8 +13,8 @@ sed -i '/#vless$/a\#&@ '"$user $exp"'\
 },{"name": "'""$user""'", "uuid": "'""$uuid""'"' /usr/local/etc/sing-box/config.json
 sed -i '/#trojan$/a\#&@ '"$user $exp"'\
 },{"name": "'""$user""'", "password": "'""$uuid""'"' /usr/local/etc/sing-box/config.json
-sed -i '/#shadowsocks$/a\#&@ '"$user $exp"'\
-},{"method": "'""$cipher""'", "password": "'""$uuid""'", "multiplex": {}' /usr/local/etc/sing-box/config.json
+
+
 sed -i '/#socks$/a\#&@ '"$user $exp"'\
 },{"username": "'""$user""'", "password": "'""$pass""'"' /usr/local/etc/sing-box/config.json
 sed -i '/#vmess-grpc$/a\#&@ '"$user $exp"'\
@@ -23,8 +23,8 @@ sed -i '/#vless-grpc$/a\#&@ '"$user $exp"'\
 },{"name": "'""$user""'", "uuid": "'""$uuid""'"' /usr/local/etc/sing-box/config.json
 sed -i '/#trojan-grpc$/a\#&@ '"$user $exp"'\
 },{"name": "'""$user""'", "password": "'""$uuid""'"' /usr/local/etc/sing-box/config.json
-sed -i '/#shadowsocks-grpc$/a\#&@ '"$user $exp"'\
-},{"method": "'""$cipher""'", "password": "'""$uuid""'", "multiplex": {}' /usr/local/etc/sing-box/config.json
+
+
 sed -i '/#socks-grpc$/a\#&@ '"$user $exp"'\
 },{"username": "'""$user""'", "password": "'""$pass""'"' /usr/local/etc/sing-box/config.json
 ISP=$(cat /usr/local/etc/sing-box/org)
@@ -83,12 +83,7 @@ vlesslink3="vless://$uuid@$domain:443?security=tls&encryption=none&type=grpc&ser
 trojanlink1="trojan://$uuid@$domain:443?path=/trojan&security=tls&host=$domain&type=ws&sni=$domain#$user"
 trojanlink2="trojan://${uuid}@$domain:80?path=/trojan&security=none&host=$domain&type=ws#$user"
 trojanlink3="trojan://${uuid}@$domain:443?security=tls&encryption=none&type=grpc&serviceName=trojan-grpc&sni=$domain#$user"
-rm -rf /tmp/log
-echo -n "$cipher:$uuid" | base64 > /tmp/log
-shadowsocks_base64=$(cat /tmp/log)
-shadowsockslink1="ss://${shadowsocks_base64}@$domain:443?path=/shadowsocks&security=tls&host=${domain}&type=ws&sni=${domain}#${user}"
-shadowsockslink2="ss://${shadowsocks_base64}@$domain:80?path=/shadowsocks&security=none&host=${domain}&type=ws#${user}"
-shadowsockslink3="ss://${shadowsocks_base64}@$domain:443?security=tls&encryption=none&type=grpc&serviceName=shadowsocks-grpc&sni=$domain#${user}"
+
 rm -rf /tmp/log
 echo -n "$user:$pass" | base64 > /tmp/log
 socks_base64=$(cat /tmp/log)
@@ -154,16 +149,6 @@ Link gRPC  : $trojanlink3
 
 
 ____________________________________________________
-            _____ [ Shadowsocks ] _____
-____________________________________________________
-Link TLS   : $shadowsockslink1
-____________________________________________________
-Link NTLS  : $shadowsockslink2
-____________________________________________________
-Link gRPC  : $shadowsockslink3
-
-
-____________________________________________________
               _____ [ Socks5 ] _____
 ____________________________________________________
 Link TLS   : $sockslink1
@@ -178,7 +163,7 @@ clear
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-allsing-box-$user.txt
 echo -e "━━━━━ [ Trial ALL sing-box ] ━━━━━" | tee -a /user/log-allsing-box-$user.txt
 echo -e "Vmess, Vless, Trojan" | tee -a /user/log-allsing-box-$user.txt
-echo -e "Shadowsocks, Shadowsocks 2022, Socks5" | tee -a /user/log-allsing-box-$user.txt
+echo -e " Socks5" | tee -a /user/log-allsing-box-$user.txt
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-allsing-box-$user.txt
 echo -e "Remarks          : $user" | tee -a /user/log-allsing-box-$user.txt
 echo -e "Domain           : $domain" | tee -a /user/log-allsing-box-$user.txt
@@ -189,7 +174,6 @@ echo -e "Port NTLS        : 80" | tee -a /user/log-allsing-box-$user.txt
 echo -e "Port gRPC        : 443" | tee -a /user/log-allsing-box-$user.txt
 echo -e "Alt Port TLS     : 2053, 2083, 2087, 2096, 8443" | tee -a /user/log-allsing-box-$user.txt
 echo -e "Alt Port NTLS    : 8080, 8880, 2052, 2082, 2086, 2095" | tee -a /user/log-allsing-box-$user.txt
-echo -e "Cipher SS        : $cipher" | tee -a /user/log-allsing-box-$user.txt
 echo -e "Password         : $uuid" | tee -a /user/log-allsing-box-$user.txt
 echo -e "Username Socks5  : $user" | tee -a /user/log-allsing-box-$user.txt
 echo -e "Password Socks5  : $pass" | tee -a /user/log-allsing-box-$user.txt
@@ -223,14 +207,6 @@ echo -e "━━━━━━━━━━━━━━━━━━━━━━━�
 echo -e "Link NTLS  : $trojanlink2" | tee -a /user/log-allsing-box-$user.txt
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-allsing-box-$user.txt
 echo -e "Link gRPC  : $trojanlink3" | tee -a /user/log-allsing-box-$user.txt
-echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-allsing-box-$user.txt
-echo -e "━━━━━ [ Shadowsocks ] ━━━━━" | tee -a /user/log-allsing-box-$user.txt
-echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-allsing-box-$user.txt
-echo -e "Link TLS   : $shadowsockslink1" | tee -a /user/log-allsing-box-$user.txt
-echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-allsing-box-$user.txt
-echo -e "Link NTLS  : $shadowsockslink2" | tee -a /user/log-allsing-box-$user.txt
-echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-allsing-box-$user.txt
-echo -e "Link gRPC  : $shadowsockslink3" | tee -a /user/log-allsing-box-$user.txt
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-allsing-box-$user.txt
 echo -e "━━━━━ [ Socks5 ] ━━━━━" | tee -a /user/log-allsing-box-$user.txt
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-allsing-box-$user.txt
