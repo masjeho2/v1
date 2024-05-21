@@ -81,7 +81,6 @@ wget -q -O /etc/nginx/nginx.conf https://raw.githubusercontent.com/masjeho2/conf
 wget -q -O /etc/nginx/conf.d/sing-box.conf https://raw.githubusercontent.com/masjeho2/conf/main/sing-box.conf
 systemctl restart nginx
 systemctl restart sing-box
-bash <(curl -L -s https://raw.githubusercontent.com/teddysun/across/master/bbr.sh)
 echo -e "${GB}[ INFO ]${NC} ${YB}Setup Done${NC}"
 sleep 2
 clear
