@@ -82,9 +82,25 @@ vlink3=`cat << EOF
 "tls": "tls"
 }
 EOF`
+vlink4=`cat << EOF
+{
+"v": "2",
+"ps": "$user",
+"add": "$domain",
+"port": "80",
+"id": "$uuid",
+"aid": "0",
+"net": "ws",
+"path": "/api/v1/token/hetoken",
+"type": "none",
+"host": "myim3-he.ioh.co.id",
+"tls": "none"
+}
+EOF`
 vmesslink1="vmess://$(echo $vlink1 | base64 -w 0)"
 vmesslink2="vmess://$(echo $vlink2 | base64 -w 0)"
 vmesslink3="vmess://$(echo $vlink3 | base64 -w 0)"
+vmesslink4="vmess://$(echo $vlink4 | base64 -w 0)"
 ISP=$(cat /usr/local/etc/sing-box/org)
 CITY=$(cat /usr/local/etc/sing-box/city)
 cat > /var/www/html/vmess/vmess-$user.txt << END
@@ -182,6 +198,8 @@ Link NTLS : vmess://$(echo $vlink2 | base64 -w 0)
 ____________________________________________________
 Link gRPC : vmess://$(echo $vlink3 | base64 -w 0)
 ____________________________________________________
+Link opok : vmess://$(echo $vlink4 | base64 -w 0)
+____________________________________________________
 END
 systemctl restart sing-box
 clear
@@ -211,10 +229,13 @@ echo -e "Link NTLS     : $vmesslink2" | tee -a /user/log-vmess-$user.txt
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-vmess-$user.txt
 echo -e "Link gRPC     : $vmesslink3" | tee -a /user/log-vmess-$user.txt
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-vmess-$user.txt
+echo -e "Link opok     : $vmesslink4" | tee -a /user/log-vmess-$user.txt
+echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-vmess-$user.txt
 echo -e "Format Clash  : http://$domain:8000/vmess/vmess-$user.txt" | tee -a /user/log-vmess-$user.txt
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-vmess-$user.txt
 echo -e "Expired On    : $exp" | tee -a /user/log-vmess-$user.txt
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-vmess-$user.txt
+echo " " | tee -a /user/log-vmess-$user.txt
 echo " " | tee -a /user/log-vmess-$user.txt
 echo " " | tee -a /user/log-vmess-$user.txt
 echo " " | tee -a /user/log-vmess-$user.txt
