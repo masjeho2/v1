@@ -260,6 +260,7 @@ chmod +x clear-log
 cd
 echo "0 0 * * * root xp" >> /etc/crontab
 echo "*/5 * * * * root clear-log" >> /etc/crontab
+echo "0 0 */7 * * curl -L -o /usr/local/etc/sing-box/geoip.db https://github.com/malikshi/sing-box-geo/releases/latest/download/geoip.db && curl -L -o /usr/local/etc/sing-box/geosite.db https://github.com/malikshi/sing-box-geo/releases/latest/download/geosite.db && systemctl restart sing-box" >> /etc/crontab
 systemctl restart cron
 cat > /root/.profile << END
 if [ "$BASH" ]; then
