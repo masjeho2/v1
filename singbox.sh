@@ -75,7 +75,7 @@ bash acme.sh --issue -d $domain --server letsencrypt --keylength ec-256 --fullch
 clear
 echo -e "${GB}[ INFO ]${NC} ${YB}Setup Nginx & sing-box Conf${NC}"
 echo "UQ3w2q98BItd3DPgyctdoJw4cqQFmY59ppiDQdqMKbw=" > /etc/sing-box/serverpsk
-wget -q -O /etc/sing-box/config.json https://raw.githubusercontent.com/masjeho2/sing-box-yes/main/all-config.json
+wget -q -O /etc/sing-box/config.json https://raw.githubusercontent.com/masjeho2/conf/main/singbox-config.json
 wget -q -O /etc/nginx/nginx.conf https://raw.githubusercontent.com/masjeho2/conf/main/nginx.conf
 wget -q -O /etc/nginx/conf.d/sing-box.conf https://raw.githubusercontent.com/masjeho2/conf/main/sing-box.conf
 systemctl restart nginx
