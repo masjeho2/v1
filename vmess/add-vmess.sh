@@ -7,6 +7,10 @@ BB='\e[34;1m'
 MB='\e[35;1m'
 CB='\e[35;1m'
 WB='\e[37;1m'
+CHATID=$(grep -E "^#bot# " "/etc/bot/.bot.db" | cut -d ' ' -f 3)
+KEY=$(grep -E "^#bot# " "/etc/bot/.bot.db" | cut -d ' ' -f 2)
+export TIME="10"
+export URL="https://api.telegram.org/bot$KEY/sendMessage"
 clear
 domain=$(cat /etc/sing-box/domain)
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
@@ -239,6 +243,14 @@ echo " " | tee -a /user/log-vmess-$user.txt
 echo " " | tee -a /user/log-vmess-$user.txt
 echo " " | tee -a /user/log-vmess-$user.txt
 echo " " | tee -a /user/log-vmess-$user.txt
+isi=$(cat /user/log-vmess-$user.txt)
+CHATID="$CHATID"
+KEY="$KEY"
+TIME="$TIME"
+URL="$URL"
+TEXT="$isi
+"
+curl -s --max-time $TIME -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
 read -n 1 -s -r -p "Press any key to back on menu"
 clear
 vmess
