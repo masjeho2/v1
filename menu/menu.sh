@@ -64,7 +64,7 @@ echo -e "━━━━━━━━━━━━━━━━━━━━━━━�
 echo -e " ${MB}[7]${NC} ${YB}Log Create Account${NC}    ${MB}[10]${NC} ${YB}About Script${NC}"
 echo -e " ${MB}[8]${NC} ${YB}Speedtest${NC}             ${MB}[11]${NC} ${YB}Update Menu${NC}"
 echo -e " ${MB}[9]${NC} ${YB}Change Domain${NC}         ${MB}[12]${NC} ${YB}Update Core${NC}"
-echo -e " ${MB}[x]${NC} ${YB}Exit${NC}                  ${MB}[13]${NC} ${YB}Add Bot${NC}"
+echo -e " ${MB}[x]${NC} ${YB}Exit${NC}                  ${MB}[13]${NC} ${YB}Add Bot notif${NC}"
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
 echo -e ""
 echo -e " ${WB}Press [ ctrl + c ] or Input x To Exit Script${NC}"
