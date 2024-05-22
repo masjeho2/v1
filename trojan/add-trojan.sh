@@ -8,13 +8,13 @@ MB='\e[35;1m'
 CB='\e[35;1m'
 WB='\e[37;1m'
 clear
-domain=$(cat /usr/local/etc/sing-box/domain)
+domain=$(cat /sing-box/domain)
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${user_EXISTS} == '0' ]]; do
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
 echo -e "                  ${WB}Add Trojan Account${NC}                "
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
 read -rp "User: " -e user
-user_EXISTS=$(grep -w $user /usr/local/etc/sing-box/config.json | wc -l)
+user_EXISTS=$(grep -w $user /sing-box/config.json | wc -l)
 if [[ ${user_EXISTS} == '1' ]]; then
 clear
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
@@ -30,14 +30,14 @@ uuid=$(cat /proc/sys/kernel/random/uuid | md5sum | cut -c -10)
 read -p "Expired (days): " masaaktif
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#trojan$/a\#& '"$user $exp"'\
-},{"name": "'""$user""'", "password": "'""$uuid""'"' /usr/local/etc/sing-box/config.json
+},{"name": "'""$user""'", "password": "'""$uuid""'"' /sing-box/config.json
 sed -i '/#trojan-grpc$/a\#& '"$user $exp"'\
-},{"name": "'""$user""'", "password": "'""$uuid""'"' /usr/local/etc/sing-box/config.json
+},{"name": "'""$user""'", "password": "'""$uuid""'"' /sing-box/config.json
 trojanlink1="trojan://$uuid@$domain:443?path=/trojan-ws&security=tls&host=$domain&type=ws&sni=$domain#$user"
 trojanlink2="trojan://${uuid}@$domain:80?path=/trojan-ws&security=none&host=$domain&type=ws#$user"
 trojanlink3="trojan://${uuid}@$domain:443?security=tls&encryption=none&type=grpc&serviceName=trojan-grpc&sni=$domain#$user"
-ISP=$(cat /usr/local/etc/sing-box/org)
-CITY=$(cat /usr/local/etc/sing-box/city)
+ISP=$(cat /sing-box/org)
+CITY=$(cat /sing-box/city)
 cat > /var/www/html/trojan/trojan-$user.txt << END
 ____________________________________________________
 

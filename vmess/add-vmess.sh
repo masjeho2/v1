@@ -8,13 +8,13 @@ MB='\e[35;1m'
 CB='\e[35;1m'
 WB='\e[37;1m'
 clear
-domain=$(cat /usr/local/etc/sing-box/domain)
+domain=$(cat /etc/sing-box/domain)
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
 echo -e "                 ${WB}Add Vmess Account${NC}                  "
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
 read -rp "User: " -e user
-CLIENT_EXISTS=$(grep -w $user /usr/local/etc/sing-box/config.json | wc -l)
+CLIENT_EXISTS=$(grep -w $user /etc/sing-box/config.json | wc -l)
 if [[ ${CLIENT_EXISTS} == '1' ]]; then
 clear
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
@@ -32,11 +32,11 @@ exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 
 # Add user to vmess
 sed -i '/#vmess$/a\#@ '"$user $exp"'\
-},{"name": "'""$user""'", "uuid": "'""$uuid""'", "alterId": 0' /usr/local/etc/sing-box/config.json
+},{"name": "'""$user""'", "uuid": "'""$uuid""'", "alterId": 0' /etc/sing-box/config.json
 
 # Add user to vmess grpc
 sed -i '/#vmess-grpc$/a\#@ '"$user $exp"'\
-},{"name": "'""$user""'", "uuid": "'""$uuid""'", "alterId": 0' /usr/local/etc/sing-box/config.json
+},{"name": "'""$user""'", "uuid": "'""$uuid""'", "alterId": 0' /etc/sing-box/config.json
 vlink1=`cat << EOF
 {
 "v": "2",
@@ -101,8 +101,8 @@ vmesslink1="vmess://$(echo $vlink1 | base64 -w 0)"
 vmesslink2="vmess://$(echo $vlink2 | base64 -w 0)"
 vmesslink3="vmess://$(echo $vlink3 | base64 -w 0)"
 vmesslink4="vmess://$(echo $vlink4 | base64 -w 0)"
-ISP=$(cat /usr/local/etc/sing-box/org)
-CITY=$(cat /usr/local/etc/sing-box/city)
+ISP=$(cat /etc/sing-box/org)
+CITY=$(cat /etc/sing-box/city)
 cat > /var/www/html/vmess/vmess-$user.txt << END
 ____________________________________________________
 

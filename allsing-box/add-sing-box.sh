@@ -15,7 +15,7 @@ echo -e "                ${WB}Vmess, Vless, Trojan${NC}                "
 echo -e "                       ${WB} Socks5${NC}       "
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
 read -rp "Username: " -e user
-CLIENT_EXISTS=$(grep -w $user /usr/local/etc/sing-box/config.json | wc -l)
+CLIENT_EXISTS=$(grep -w $user /etc/sing-box/config.json | wc -l)
 if [[ ${CLIENT_EXISTS} == '1' ]]; then
 clear
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
@@ -32,7 +32,7 @@ fi
 done
 until [[ $pass =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 read -rp "Password (Pass for Socks5): " -e pass
-CLIENT_EXISTS=$(grep -w $pass /usr/local/etc/sing-box/config.json | wc -l)
+CLIENT_EXISTS=$(grep -w $pass /etc/sing-box/config.json | wc -l)
 if [[ ${CLIENT_EXISTS} == '1' ]]; then
 clear
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
@@ -47,31 +47,31 @@ all-sing-box
 clear
 fi
 done
-domain=$(cat /usr/local/etc/sing-box/domain)
+domain=$(cat /etc/sing-box/domain)
 
 uuid=$(cat /proc/sys/kernel/random/uuid | md5sum | cut -c -10)
 read -p "Expired (days): " masaaktif
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vmess$/a\#&@ '"$user $exp"'\
-},{"name": "'""$user""'", "uuid": "'""$uuid""'", "alterId": 0' /usr/local/etc/sing-box/config.json
+},{"name": "'""$user""'", "uuid": "'""$uuid""'", "alterId": 0' /etc/sing-box/config.json
 sed -i '/#vless$/a\#&@ '"$user $exp"'\
-},{"name": "'""$user""'", "uuid": "'""$uuid""'"' /usr/local/etc/sing-box/config.json
+},{"name": "'""$user""'", "uuid": "'""$uuid""'"' /etc/sing-box/config.json
 sed -i '/#trojan$/a\#&@ '"$user $exp"'\
-},{"name": "'""$user""'", "password": "'""$uuid""'"' /usr/local/etc/sing-box/config.json
+},{"name": "'""$user""'", "password": "'""$uuid""'"' /etc/sing-box/config.json
 
 sed -i '/#socks$/a\#&@ '"$user $exp"'\
-},{"username": "'""$user""'", "password": "'""$pass""'"' /usr/local/etc/sing-box/config.json
+},{"username": "'""$user""'", "password": "'""$pass""'"' /etc/sing-box/config.json
 sed -i '/#vmess-grpc$/a\#&@ '"$user $exp"'\
-},{"name": "'""$user""'", "uuid": "'""$uuid""'", "alterId": 0' /usr/local/etc/sing-box/config.json
+},{"name": "'""$user""'", "uuid": "'""$uuid""'", "alterId": 0' /etc/sing-box/config.json
 sed -i '/#vless-grpc$/a\#&@ '"$user $exp"'\
-},{"name": "'""$user""'", "uuid": "'""$uuid""'"' /usr/local/etc/sing-box/config.json
+},{"name": "'""$user""'", "uuid": "'""$uuid""'"' /etc/sing-box/config.json
 sed -i '/#trojan-grpc$/a\#&@ '"$user $exp"'\
-},{"name": "'""$user""'", "password": "'""$uuid""'"' /usr/local/etc/sing-box/config.json
+},{"name": "'""$user""'", "password": "'""$uuid""'"' /etc/sing-box/config.json
 
 sed -i '/#socks-grpc$/a\#&@ '"$user $exp"'\
-},{"username": "'""$user""'", "password": "'""$pass""'"' /usr/local/etc/sing-box/config.json
-ISP=$(cat /usr/local/etc/sing-box/org)
-CITY=$(cat /usr/local/etc/sing-box/city)
+},{"username": "'""$user""'", "password": "'""$pass""'"' /etc/sing-box/config.json
+ISP=$(cat /etc/sing-box/org)
+CITY=$(cat /etc/sing-box/city)
 vmlink1=`cat<<EOF
 {
 "v": "2",

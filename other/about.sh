@@ -21,8 +21,6 @@ echo -e "  ${YB}- Vless${NC}                   ${WB}|${NC}  ${YB}- Websocket (CD
 echo -e "  ${YB}- Vmess${NC}                   ${WB}|${NC}  ${YB}- Websocket (CDN) TLS${NC}"
 echo -e "  ${YB}- Trojan${NC}                  ${WB}|${NC}  ${YB}- gRPC (CDN) TLS${NC}"
 echo -e "  ${YB}- Socks5${NC}                  ${WB}|${NC}"
-echo -e "  ${YB}- Shadowsocks${NC}             ${WB}|${NC}"
-echo -e "  ${YB}- Shadowsocks 2022${NC}        ${WB}|${NC}"
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
 echo -e "               ${WB}»»» Network Port Service «««${NC}             "
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 

@@ -9,7 +9,7 @@ CB='\e[35;1m'
 WB='\e[37;1m'
 clear
 echo -n >/tmp/other.txt
-data=($(cat /usr/local/etc/sing-box/config.json | grep '^#&@' | cut -d ' ' -f 2 | sort | uniq))
+data=($(cat /etc/sing-box/config.json | grep '^#&@' | cut -d ' ' -f 2 | sort | uniq))
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10
 echo -e "             ${WB}All sing-box User Login Account${NC}              "
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10

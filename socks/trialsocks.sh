@@ -1,4 +1,4 @@
-domain=$(cat /usr/local/etc/sing-box/domain)
+domain=$(cat /etc/sing-box/domain)
 user=trial-`echo $RANDOM | head -c4`
 pass=`echo $RANDOM | head -c4`
 masaaktif=1
@@ -6,17 +6,17 @@ echo ""
 echo ""
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#socks$/a\#÷ '"$user $exp"'\
-},{"username": "'""$user""'", "password": "'""$pass""'"' /usr/local/etc/sing-box/config.json
+},{"username": "'""$user""'", "password": "'""$pass""'"' /etc/sing-box/config.json
 sed -i '/#socks-grpc$/a\#÷ '"$user $exp"'\
-},{"username": "'""$user""'", "password": "'""$pass""'"' /usr/local/etc/sing-box/config.json
+},{"username": "'""$user""'", "password": "'""$pass""'"' /etc/sing-box/config.json
 echo -n "$user:$pass" | base64 > /tmp/log
 socks_base64=$(cat /tmp/log)
 sockslink1="socks://$socks_base64@$domain:443?path=/socks5&security=tls&host=$domain&type=ws&sni=$domain#$user"
 sockslink2="socks://$socks_base64@$domain:80?path=/socks5&security=none&host=$domain&type=ws#$user"
 sockslink3="socks://$socks_base64@$domain:443?security=tls&encryption=none&type=grpc&serviceName=socks5-grpc&sni=$domain#$user"
 rm -rf /tmp/log
-ISP=$(cat /usr/local/etc/sing-box/org)
-CITY=$(cat /usr/local/etc/sing-box/city)
+ISP=$(cat /etc/sing-box/org)
+CITY=$(cat /etc/sing-box/city)
 cat > /var/www/html/socks5/socks5-$user.txt << EOF
 ____________________________________________________
 

@@ -1,4 +1,4 @@
-domain=$(cat /usr/local/etc/sing-box/domain)
+domain=$(cat /etc/sing-box/domain)
 user=trial-`echo $RANDOM | head -c4`
 pass=`echo $RANDOM | head -c4`
 masaaktif=1
@@ -8,27 +8,27 @@ echo ""
 echo ""
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vmess$/a\#&@ '"$user $exp"'\
-},{"name": "'""$user""'", "uuid": "'""$uuid""'", "alterId": 0' /usr/local/etc/sing-box/config.json
+},{"name": "'""$user""'", "uuid": "'""$uuid""'", "alterId": 0' /etc/sing-box/config.json
 sed -i '/#vless$/a\#&@ '"$user $exp"'\
-},{"name": "'""$user""'", "uuid": "'""$uuid""'"' /usr/local/etc/sing-box/config.json
+},{"name": "'""$user""'", "uuid": "'""$uuid""'"' /etc/sing-box/config.json
 sed -i '/#trojan$/a\#&@ '"$user $exp"'\
-},{"name": "'""$user""'", "password": "'""$uuid""'"' /usr/local/etc/sing-box/config.json
+},{"name": "'""$user""'", "password": "'""$uuid""'"' /etc/sing-box/config.json
 
 
 sed -i '/#socks$/a\#&@ '"$user $exp"'\
-},{"username": "'""$user""'", "password": "'""$pass""'"' /usr/local/etc/sing-box/config.json
+},{"username": "'""$user""'", "password": "'""$pass""'"' /etc/sing-box/config.json
 sed -i '/#vmess-grpc$/a\#&@ '"$user $exp"'\
-},{"name": "'""$user""'", "uuid": "'""$uuid""'", "alterId": 0' /usr/local/etc/sing-box/config.json
+},{"name": "'""$user""'", "uuid": "'""$uuid""'", "alterId": 0' /etc/sing-box/config.json
 sed -i '/#vless-grpc$/a\#&@ '"$user $exp"'\
-},{"name": "'""$user""'", "uuid": "'""$uuid""'"' /usr/local/etc/sing-box/config.json
+},{"name": "'""$user""'", "uuid": "'""$uuid""'"' /etc/sing-box/config.json
 sed -i '/#trojan-grpc$/a\#&@ '"$user $exp"'\
-},{"name": "'""$user""'", "password": "'""$uuid""'"' /usr/local/etc/sing-box/config.json
+},{"name": "'""$user""'", "password": "'""$uuid""'"' /etc/sing-box/config.json
 
 
 sed -i '/#socks-grpc$/a\#&@ '"$user $exp"'\
-},{"username": "'""$user""'", "password": "'""$pass""'"' /usr/local/etc/sing-box/config.json
-ISP=$(cat /usr/local/etc/sing-box/org)
-CITY=$(cat /usr/local/etc/sing-box/city)
+},{"username": "'""$user""'", "password": "'""$pass""'"' /etc/sing-box/config.json
+ISP=$(cat /etc/sing-box/org)
+CITY=$(cat /etc/sing-box/city)
 vmlink1=`cat<<EOF
 {
 "v": "2",

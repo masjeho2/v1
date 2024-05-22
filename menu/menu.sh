@@ -25,10 +25,10 @@ ttoday="$(vnstat | grep today | awk '{print $8" "substr ($9, 1, 3)}')"
 dmon="$(vnstat -m | grep `date +%G-%m` | awk '{print $2" "substr ($3, 1 ,3)}')"
 umon="$(vnstat -m | grep `date +%G-%m` | awk '{print $5" "substr ($6, 1 ,3)}')"
 tmon="$(vnstat -m | grep `date +%G-%m` | awk '{print $8" "substr ($9, 1 ,3)}')"
-domain=$(cat /usr/local/etc/sing-box/domain)
-ISP=$(cat /usr/local/etc/sing-box/org)
-CITY=$(cat /usr/local/etc/sing-box/city)
-WKT=$(cat /usr/local/etc/sing-box/timezone)
+domain=$(cat /etc/sing-box/domain)
+ISP=$(cat /etc/sing-box/org)
+CITY=$(cat /etc/sing-box/city)
+WKT=$(cat /etc/sing-box/timezone)
 DATE=$(date -R | cut -d " " -f -4)
 MYIP=$(curl -sS ipv4.icanhazip.com)
 clear
@@ -62,7 +62,8 @@ echo -e "━━━━━━━━━━━━━━━━━━━━━━━�
 echo -e "                 ${WB}━━━━━ [ Utility ] ━━━━━${NC}                "
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
 echo -e " ${MB}[7]${NC} ${YB}Log Create Account${NC}    ${MB}[10]${NC} ${YB}About Script${NC}"
-echo -e " ${MB}[8]${NC} ${YB}Speedtest${NC}             ${MB}[9]${NC} ${YB}Change Domain${NC}" 
+echo -e " ${MB}[8]${NC} ${YB}Speedtest${NC}             ${MB}[11]${NC} ${YB}Update Menu${NC}"
+echo -e " ${MB}[9]${NC} ${YB}Change Domain${NC}         ${MB}[12]${NC} ${YB}Update Core${NC}"
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
 echo -e ""
 echo -e " ${WB}Press [ ctrl + c ] or Input x To Exit Script${NC}"
@@ -80,6 +81,8 @@ case $opt in
 9) clear ; dns ;;
 6) clear ; certsing-box ;;
 10) clear ; about ;;
+12) clear ; update-core ; bash <(curl -fsSL https://sing-box.app/deb-install.sh) ;;
+11) clear ; update-menu ; bash <(curl -fsSL https://raw.githubusercontent.com/masjeho2/v1/sing-box/update.sh) ;;
 x) exit ;;
 *) echo -e "salah input" ; sleep 0.5 ; menu ;;
 esac

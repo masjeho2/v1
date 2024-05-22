@@ -1,4 +1,4 @@
-domain=$(cat /usr/local/etc/sing-box/domain)
+domain=$(cat /etc/sing-box/domain)
 user=trial-`echo $RANDOM | head -c4`
 uuid=$(cat /proc/sys/kernel/random/uuid | md5sum | cut -c -10)
 masaaktif=1
@@ -6,14 +6,14 @@ echo ""
 echo ""
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#trojan$/a\#& '"$user $exp"'\
-},{"name": "'""$user""'", "password": "'""$uuid""'"' /usr/local/etc/sing-box/config.json
+},{"name": "'""$user""'", "password": "'""$uuid""'"' /etc/sing-box/config.json
 sed -i '/#trojan-grpc$/a\#& '"$user $exp"'\
-},{"name": "'""$user""'", "password": "'""$uuid""'"' /usr/local/etc/sing-box/config.json
+},{"name": "'""$user""'", "password": "'""$uuid""'"' /etc/sing-box/config.json
 trojanlink1="trojan://$uuid@$domain:443?path=/trojan-ws&security=tls&host=$domain&type=ws&sni=$domain#$user"
 trojanlink2="trojan://${uuid}@$domain:80?path=/trojan-ws&security=none&host=$domain&type=ws#$user"
 trojanlink3="trojan://${uuid}@$domain:443?security=tls&encryption=none&type=grpc&serviceName=trojan-grpc&sni=$domain#$user"
-ISP=$(cat /usr/local/etc/sing-box/org)
-CITY=$(cat /usr/local/etc/sing-box/city)
+ISP=$(cat /etc/sing-box/org)
+CITY=$(cat /etc/sing-box/city)
 cat > /var/www/html/trojan/trojan-$user.txt << END
 ____________________________________________________
 

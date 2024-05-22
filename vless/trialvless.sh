@@ -1,4 +1,4 @@
-domain=$(cat /usr/local/etc/sing-box/domain)
+domain=$(cat /etc/sing-box/domain)
 user=trial-`echo $RANDOM | head -c4`
 uuid=$(cat /proc/sys/kernel/random/uuid | md5sum | cut -c -10)
 masaaktif=1
@@ -6,14 +6,14 @@ echo ""
 echo ""
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vless$/a\#= '"$user $exp"'\
-},{"name": "'""$user""'", "uuid": "'""$uuid""'"' /usr/local/etc/sing-box/config.json
+},{"name": "'""$user""'", "uuid": "'""$uuid""'"' /etc/sing-box/config.json
 sed -i '/#vless-grpc$/a\#= '"$user $exp"'\
-},{"name": "'""$user""'", "uuid": "'""$uuid""'"' /usr/local/etc/sing-box/config.json
+},{"name": "'""$user""'", "uuid": "'""$uuid""'"' /etc/sing-box/config.json
 vlesslink1="vless://$uuid@$domain:443?path=/vless&security=tls&encryption=none&host=$domain&type=ws&sni=$domain#$user"
 vlesslink2="vless://$uuid@$domain:80?path=/vless&security=none&encryption=none&host=$domain&type=ws#$user"
 vlesslink3="vless://$uuid@$domain:443?security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=$domain#$user"
-ISP=$(cat /usr/local/etc/sing-box/org)
-CITY=$(cat /usr/local/etc/sing-box/city)
+ISP=$(cat /etc/sing-box/org)
+CITY=$(cat /etc/sing-box/city)
 cat > /var/www/html/vless/vless-$user.txt << END
 ____________________________________________________
 

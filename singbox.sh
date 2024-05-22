@@ -24,14 +24,13 @@ mkdir /tmp > /dev/null 2>&1
 clear
 vnstat --remove -i eth1 --force
 clear
-rm /usr/local/etc/sing-box/city > /dev/null 2>&1
-rm /usr/local/etc/sing-box/org > /dev/null 2>&1
-rm /usr/local/etc/sing-box/timezone > /dev/null 2>&1
-bash <(curl -Ls https://raw.githubusercontent.com/masjeho2/sing-box-yes/master/install.sh) install
-cp /usr/local/bin/sing-box /backup/sing-box.official.backup
-curl -s ipinfo.io/city >> /usr/local/etc/sing-box/city
-curl -s ipinfo.io/org | cut -d " " -f 2-10 >> /usr/local/etc/sing-box/org
-curl -s ipinfo.io/timezone >> /usr/local/etc/sing-box/timezone
+rm /etc/sing-box/city > /dev/null 2>&1
+rm /etc/sing-box/org > /dev/null 2>&1
+rm /etc/sing-box/timezone > /dev/null 2>&1
+bash <(curl -fsSL https://sing-box.app/deb-install.sh)
+curl -s ipinfo.io/city >> /etc/sing-box/city
+curl -s ipinfo.io/org | cut -d " " -f 2-10 >> /etc/sing-box/org
+curl -s ipinfo.io/timezone >> /etc/sing-box/timezone
 clear
 sleep 1
 cd
@@ -56,27 +55,27 @@ mkdir -p /var/www/html/allsing-box
 mkdir -p /var/log/sing-box
 systemctl restart nginx
 clear
-touch /usr/local/etc/sing-box/domain
+touch /etc/sing-box/domain
 echo -e "${YB}Input Domain${NC} "
 echo " "
 read -rp "Input your domain : " -e dns
 if [ -z $dns ]; then
 echo -e "Nothing input for domain!"
 else
-echo "$dns" > /usr/local/etc/sing-box/domain
+echo "$dns" > /etc/sing-box/domain
 echo "DNS=$dns" > /var/lib/dnsvps.conf
 fi
 clear
 systemctl stop nginx
-domain=$(cat /usr/local/etc/sing-box/domain)
+domain=$(cat /etc/sing-box/domain)
 curl https://get.acme.sh | sh
 source ~/.bashrc
 cd .acme.sh
-bash acme.sh --issue -d $domain --server letsencrypt --keylength ec-256 --fullchain-file /usr/local/etc/sing-box/fullchain.crt --key-file /usr/local/etc/sing-box/private.key --standalone --force
+bash acme.sh --issue -d $domain --server letsencrypt --keylength ec-256 --fullchain-file /etc/sing-box/fullchain.crt --key-file /etc/sing-box/private.key --standalone --force
 clear
 echo -e "${GB}[ INFO ]${NC} ${YB}Setup Nginx & sing-box Conf${NC}"
-echo "UQ3w2q98BItd3DPgyctdoJw4cqQFmY59ppiDQdqMKbw=" > /usr/local/etc/sing-box/serverpsk
-#wget -q -O /usr/local/etc/sing-box/config.json https://raw.githubusercontent.com/masjeho2/conf/main/config.json
+echo "UQ3w2q98BItd3DPgyctdoJw4cqQFmY59ppiDQdqMKbw=" > /etc/sing-box/serverpsk
+wget -q -O /etc/sing-box/config.json https://raw.githubusercontent.com/masjeho2/sing-box-yes/main/all-config.json
 wget -q -O /etc/nginx/nginx.conf https://raw.githubusercontent.com/masjeho2/conf/main/nginx.conf
 wget -q -O /etc/nginx/conf.d/sing-box.conf https://raw.githubusercontent.com/masjeho2/conf/main/sing-box.conf
 systemctl restart nginx
@@ -139,8 +138,6 @@ wget -q -O menu "https://raw.githubusercontent.com/masjeho2/v1/sing-box/menu/men
 wget -q -O vmess "https://raw.githubusercontent.com/masjeho2/v1/sing-box/menu/vmess.sh"
 wget -q -O vless "https://raw.githubusercontent.com/masjeho2/v1/sing-box/menu/vless.sh"
 wget -q -O trojan "https://raw.githubusercontent.com/masjeho2/v1/sing-box/menu/trojan.sh"
-wget -q -O shadowsocks "https://raw.githubusercontent.com/masjeho2/v1/sing-box/menu/shadowsocks.sh"
-wget -q -O shadowsocks2022 "https://raw.githubusercontent.com/masjeho2/v1/sing-box/menu/shadowsocks2022.sh"
 wget -q -O socks "https://raw.githubusercontent.com/masjeho2/v1/sing-box/menu/socks.sh"
 wget -q -O allsing-box "https://raw.githubusercontent.com/masjeho2/v1/sing-box/menu/allsing-box.sh"
 sleep 0.5
@@ -184,8 +181,6 @@ wget -q -O log-create "https://raw.githubusercontent.com/masjeho2/v1/sing-box/lo
 wget -q -O log-vmess "https://raw.githubusercontent.com/masjeho2/v1/sing-box/log/log-vmess.sh"
 wget -q -O log-vless "https://raw.githubusercontent.com/masjeho2/v1/sing-box/log/log-vless.sh"
 wget -q -O log-trojan "https://raw.githubusercontent.com/masjeho2/v1/sing-box/log/log-trojan.sh"
-wget -q -O log-ss "https://raw.githubusercontent.com/masjeho2/v1/sing-box/log/log-ss.sh"
-wget -q -O log-ss2022 "https://raw.githubusercontent.com/masjeho2/v1/sing-box/log/log-ss2022.sh"
 wget -q -O log-socks "https://raw.githubusercontent.com/masjeho2/v1/sing-box/log/log-socks.sh"
 wget -q -O log-allsing-box "https://raw.githubusercontent.com/masjeho2/v1/sing-box/log/log-allsing-box.sh"
 sleep 0.5
@@ -193,8 +188,6 @@ echo -e "${GB}[ INFO ]${NC} ${YB}Downloading Other Menu${NC}"
 wget -q -O xp "https://raw.githubusercontent.com/masjeho2/v1/sing-box/other/xp.sh"
 wget -q -O dns "https://raw.githubusercontent.com/masjeho2/v1/sing-box/other/dns.sh"
 wget -q -O certsing-box "https://raw.githubusercontent.com/masjeho2/v1/sing-box/other/certsing-box.sh"
-wget -q -O sing-boxmod "https://raw.githubusercontent.com/masjeho2/v1/sing-box/other/sing-boxmod.sh"
-wget -q -O sing-boxofficial "https://raw.githubusercontent.com/masjeho2/v1/sing-box/other/sing-boxofficial.sh"
 wget -q -O about "https://raw.githubusercontent.com/masjeho2/v1/sing-box/other/about.sh"
 wget -q -O clear-log "https://raw.githubusercontent.com/masjeho2/v1/sing-box/other/clear-log.sh"
 echo -e "${GB}[ INFO ]${NC} ${YB}Download All Menu Done${NC}"
@@ -260,7 +253,7 @@ chmod +x clear-log
 cd
 echo "0 0 * * * root xp" >> /etc/crontab
 echo "*/5 * * * * root clear-log" >> /etc/crontab
-echo "0 0 */7 * * curl -L -o /usr/local/etc/sing-box/geoip.db https://github.com/malikshi/sing-box-geo/releases/latest/download/geoip.db && curl -L -o /usr/local/etc/sing-box/geosite.db https://github.com/malikshi/sing-box-geo/releases/latest/download/geosite.db && systemctl restart sing-box" >> /etc/crontab
+echo "0 0 */7 * * curl -L -o /etc/sing-box/geoip.db https://github.com/malikshi/sing-box-geo/releases/latest/download/geoip.db && curl -L -o /etc/sing-box/geosite.db https://github.com/malikshi/sing-box-geo/releases/latest/download/geosite.db && systemctl restart sing-box" >> /etc/crontab
 systemctl restart cron
 cat > /root/.profile << END
 if [ "$BASH" ]; then

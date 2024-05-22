@@ -24,12 +24,12 @@ fi
 echo -e "${GB}[ INFO ]${NC} ${YB}Starting renew cert...${NC} "
 sleep 2
 cd .acme.sh
-bash acme.sh --issue -d $domain --server letsencrypt --keylength ec-256 --fullchain-file /usr/local/etc/sing-box/fullchain.crt --key-file /usr/local/etc/sing-box/private.key --standalone --force
+bash acme.sh --issue -d $domain --server letsencrypt --keylength ec-256 --fullchain-file /etc/sing-box/fullchain.crt --key-file /etc/sing-box/private.key --standalone --force
 echo -e "${GB}[ INFO ]${NC} ${YB}Renew cert done...${NC} "
 sleep 2
 echo -e "${GB}[ INFO ]${NC} ${YB}Starting service $Cek${NC} "
 sleep 2
-echo "$domain" > /usr/local/etc/sing-box/domain
+echo "$domain" > /etc/sing-box/domain
 systemctl restart $Cek
 systemctl restart nginx
 echo -e "${GB}[ INFO ]${NC} ${YB}All finished...${NC} "

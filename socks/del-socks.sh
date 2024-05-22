@@ -8,7 +8,7 @@ MB='\e[35;1m'
 CB='\e[35;1m'
 WB='\e[37;1m'
 clear
-NUMBER_OF_CLIENTS=$(grep -c -E "^#÷ " "/usr/local/etc/sing-box/config.json")
+NUMBER_OF_CLIENTS=$(grep -c -E "^#÷ " "/etc/sing-box/config.json")
 if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
 clear
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
@@ -25,7 +25,7 @@ echo -e "               ${WB}Delete Socks5 Account${NC}                "
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
 echo -e " ${YB}User  Expired${NC}  "
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
-grep -E "^#÷ " "/usr/local/etc/sing-box/config.json" | cut -d ' ' -f 2-3 | column -t | sort | uniq
+grep -E "^#÷ " "/etc/sing-box/config.json" | cut -d ' ' -f 2-3 | column -t | sort | uniq
 echo ""
 echo -e "${YB}tap enter to go back${NC}"
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
@@ -33,8 +33,8 @@ read -rp "Input Username : " user
 if [ -z $user ]; then
 trojan
 else
-exp=$(grep -wE "^#÷ $user" "/usr/local/etc/sing-box/config.json" | cut -d ' ' -f 3 | sort | uniq)
-sed -i "/^#÷ $user $exp/,/^},{/d" /usr/local/etc/sing-box/config.json
+exp=$(grep -wE "^#÷ $user" "/etc/sing-box/config.json" | cut -d ' ' -f 3 | sort | uniq)
+sed -i "/^#÷ $user $exp/,/^},{/d" /etc/sing-box/config.json
 rm -rf /var/www/html/socks5/socks5-$user.txt
 rm -rf /user/log-socks5-$user.txt
 systemctl restart sing-box
