@@ -1,5 +1,6 @@
 domain=$(cat /etc/sing-box/domain)
-CHATID="1658354197"
+CHATID=$(grep -E "^#bot# " "/etc/bot/.bot.db" | cut -d ' ' -f 3)
+CHATID="$CHATID"
 KEY="6860001875:AAEezcndU20DatRjLEhWnUYT9mP2ZVx9dkQ"
 WKT="10"
 URL="https://api.telegram.org/bot$KEY/sendMessage"
