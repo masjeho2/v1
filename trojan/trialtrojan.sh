@@ -117,7 +117,7 @@ echo -e "━━━━━━━━━━━━━━━━━━━━━━━�
 echo " " | tee -a /user/log-trojan-$user.txt
 echo " " | tee -a /user/log-trojan-$user.txt
 echo " " | tee -a /user/log-trojan-$user.txt
-isi=$(cat /var/www/html/trojan/trojan-$user.txt)
+isi=$(cat /user/log-trojan-$user.txt | jq -sRr @uri)
 CHATID="$CHATID"
 KEY="$KEY"
 TIME="$TIME"
@@ -125,6 +125,7 @@ URL="$URL"
 TEXT="$isi
 "
 curl -s --max-time $TIME -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
+curl -s --max-time $TIME -d "chat_id=$CHATID&text=New $user ($exp) has been successfully created&parse_mode=html" $URL >/dev/null
 read -n 1 -s -r -p "Press any key to back on menu"
 clear
 trojan

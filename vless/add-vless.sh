@@ -167,14 +167,15 @@ echo -e "━━━━━━━━━━━━━━━━━━━━━━━�
 echo " " | tee -a /user/log-vless-$user.txt
 echo " " | tee -a /user/log-vless-$user.txt
 echo " " | tee -a /user/log-vless-$user.txt
-isi=$(cat /var/www/html/vless/vless-$user.txt)
+isi=$(cat /user/log-vless-$user.txt | jq -sRr @uri)
 CHATID="$CHATID"
 KEY="$KEY"
 TIME="$TIME"
 URL="$URL"
-TEXT="$isi
-"
+TEXT="$isi"
 curl -s --max-time $TIME -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
+
+
 read -n 1 -s -r -p "Press any key to back on menu"
 clear
 vless

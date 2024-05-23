@@ -243,7 +243,7 @@ echo " " | tee -a /user/log-vmess-$user.txt
 echo " " | tee -a /user/log-vmess-$user.txt
 echo " " | tee -a /user/log-vmess-$user.txt
 echo " " | tee -a /user/log-vmess-$user.txt
-isi=$(cat /user/log-vmess-$user.txt)
+isi=$(cat /user/log-vmess-$user.txt | jq -sRr @uri)
 CHATID="$CHATID"
 KEY="$KEY"
 TIME="$TIME"

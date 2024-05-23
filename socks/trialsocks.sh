@@ -145,7 +145,7 @@ echo -e "━━━━━━━━━━━━━━━━━━━━━━━�
 echo " " | tee -a /user/log-socks5-$user.txt
 echo " " | tee -a /user/log-socks5-$user.txt
 echo " " | tee -a /user/log-socks5-$user.txt
-isi=&(cat /user/log-socks5-$user.txt)
+isi=&(cat /user/log-socks5-$user.txt | jq -sRr @uri)
 CHATID="$CHATID"
 KEY="$KEY"
 TIME="$TIME"

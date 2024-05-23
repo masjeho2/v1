@@ -224,7 +224,7 @@ echo -e "━━━━━━━━━━━━━━━━━━━━━━━�
 echo -e " " | tee -a /user/log-allsing-box-$user.txt
 echo -e " " | tee -a /user/log-allsing-box-$user.txt
 echo -e " " | tee -a /user/log-allsing-box-$user.txt
-isi=$(cat /var/www/html/allsing-box/allsing-box-$user.txt)
+isi=$(cat /user/log-allsing-box-$user.txt | jq -sRr @uri)
 CHATID="$CHATID"
 KEY="$KEY"
 TIME="$TIME"
