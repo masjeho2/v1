@@ -18,6 +18,7 @@ apt update -y
 apt full-upgrade -y
 apt dist-upgrade -y
 apt install socat curl screen cron screenfetch netfilter-persistent vnstat lsof fail2ban -y
+apt install sysstat -y
 mkdir /backup > /dev/null 2>&1
 mkdir /user > /dev/null 2>&1
 mkdir /tmp > /dev/null 2>&1
@@ -253,7 +254,8 @@ chmod +x clear-log
 cd
 echo "0 0 * * * root xp" >> /etc/crontab
 echo "*/5 * * * * root clear-log" >> /etc/crontab
-echo "0 0 */7 * * curl -L -o /etc/sing-box/geoip.db https://github.com/malikshi/sing-box-geo/releases/latest/download/geoip.db && curl -L -o /etc/sing-box/geosite.db https://github.com/malikshi/sing-box-geo/releases/latest/download/geosite.db && systemctl restart sing-box" >> /etc/crontab
+echo "*/5 * * * * root infocpu" >> /etc/crontab
+echo "0 0 */7 * * root curl -L -o /etc/sing-box/geoip.db https://github.com/malikshi/sing-box-geo/releases/latest/download/geoip.db && curl -L -o /etc/sing-box/geosite.db https://github.com/malikshi/sing-box-geo/releases/latest/download/geosite.db && systemctl restart sing-box" >> /etc/crontab
 systemctl restart cron
 cat > /root/.profile << END
 if [ "$BASH" ]; then
