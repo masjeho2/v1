@@ -42,6 +42,7 @@ echo -e " \e[1;97;101m      SUCCES ADD BOT NOTIFIKASI      \e[0m"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo " Bot Token    : $bottoken"
 echo " ID Telegram  : $admin"
+echo " Bot Notif    : http://t.me/infovpsnotif_bot"
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 read -n 1 -s -r -p "Press [ Enter ] to back menu"
 menu
