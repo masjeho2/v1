@@ -191,6 +191,7 @@ wget -q -O dns "https://raw.githubusercontent.com/masjeho2/v1/sing-box/other/dns
 wget -q -O certsing-box "https://raw.githubusercontent.com/masjeho2/v1/sing-box/other/certsing-box.sh"
 wget -q -O about "https://raw.githubusercontent.com/masjeho2/v1/sing-box/other/about.sh"
 wget -q -O clear-log "https://raw.githubusercontent.com/masjeho2/v1/sing-box/other/clear-log.sh"
+wget -q -O infocpu "https://raw.githubusercontent.com/masjeho2/v1/sing-box/other/infocpu.sh"
 echo -e "${GB}[ INFO ]${NC} ${YB}Download All Menu Done${NC}"
 sleep 2
 chmod +x add-vmess
@@ -251,6 +252,7 @@ chmod +x sing-boxmod
 chmod +x sing-boxofficial
 chmod +x about
 chmod +x clear-log
+chmod +x infocpu
 cd
 echo "0 0 * * * root xp" >> /etc/crontab
 echo "*/5 * * * * root clear-log" >> /etc/crontab
