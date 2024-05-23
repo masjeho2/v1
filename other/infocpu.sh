@@ -26,5 +26,5 @@ then
     service sing-box restart
     pkill -f 'menu'
 fi
-TEXT="vps2 $kirimtele"
+TEXT="vps $kirimtele"
 curl -s --max-time $WKT -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
