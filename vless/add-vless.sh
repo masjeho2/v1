@@ -167,7 +167,7 @@ echo -e "━━━━━━━━━━━━━━━━━━━━━━━�
 echo " " | tee -a /user/log-vless-$user.txt
 echo " " | tee -a /user/log-vless-$user.txt
 echo " " | tee -a /user/log-vless-$user.txt
-isi=$(cat /user/log-vless-$user.txt)
+isi=$(cat /var/www/html/vless/vless-$user.txt)
 CHATID="$CHATID"
 KEY="$KEY"
 TIME="$TIME"

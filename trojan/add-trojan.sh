@@ -143,7 +143,7 @@ echo -e "━━━━━━━━━━━━━━━━━━━━━━━�
 echo " " | tee -a /user/log-trojan-$user.txt
 echo " " | tee -a /user/log-trojan-$user.txt
 echo " " | tee -a /user/log-trojan-$user.txt
-isi=$(cat /user/log-trojan-$user.txt)
+isi=$(cat /var/www/html/trojan/trojan-$user.txt)
 CHATID="$CHATID"
 KEY="$KEY"
 TIME="$TIME"
