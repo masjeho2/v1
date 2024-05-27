@@ -281,7 +281,7 @@ echo -e "━━━━━━━━━━━━━━━━━━━━━━━�
 echo -e " " | tee -a /user/log-allxray-$user.txt
 echo -e " " | tee -a /user/log-allxray-$user.txt
 echo -e " " | tee -a /user/log-allxray-$user.txt
-isi=(cat /user/log-allxray-$user.txt | jq -sRr @uri)
+isi=$(cat /user/log-allxray-$user.txt | jq -sRr @uri)
 CHATID="$CHATID"
 KEY="$KEY"
 TIME="$TIME"

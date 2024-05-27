@@ -129,7 +129,7 @@ echo -e "━━━━━━━━━━━━━━━━━━━━━━━�
 echo " " | tee -a /user/log-ss-$user.txt
 echo " " | tee -a /user/log-ss-$user.txt
 echo " " | tee -a /user/log-ss-$user.txt
-isi=(cat /user/log-ss-$user.txt | jq -sRr @uri)
+isi=$(cat /user/log-ss-$user.txt | jq -sRr @uri)
 CHATID="$CHATID"
 KEY="$KEY"
 TIME="$TIME"
