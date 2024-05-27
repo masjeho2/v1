@@ -82,9 +82,25 @@ vlink3=`cat << EOF
 "tls": "tls"
 }
 EOF`
+vlink4=`cat << EOF
+{
+"v": "2",
+"ps": "$user",
+"add": "$domain",
+"port": "80",
+"id": "$uuid",
+"aid": "0",
+"net": "ws",
+"path": "/api/v1/token/hetoken",
+"type": "none",
+"host": "myim3-he.ioh.co.id",
+"tls": "none"
+}
+EOF`
 vmesslink1="vmess://$(echo $vlink1 | base64 -w 0)"
 vmesslink2="vmess://$(echo $vlink2 | base64 -w 0)"
 vmesslink3="vmess://$(echo $vlink3 | base64 -w 0)"
+vmesslink4="vmess://$(echo $vlink4 | base64 -w 0)"
 ISP=$(cat /usr/local/etc/xray/org)
 CITY=$(cat /usr/local/etc/xray/city)
 cat > /var/www/html/vmess/vmess-$user.txt << END
@@ -181,6 +197,8 @@ ____________________________________________________
 Link NTLS : vmess://$(echo $vlink2 | base64 -w 0)
 ____________________________________________________
 Link gRPC : vmess://$(echo $vlink3 | base64 -w 0)
+____________________________________________________
+Link opok : vmess://$(echo $vlink4 | base64 -w 0)
 ____________________________________________________
 END
 systemctl restart xray
