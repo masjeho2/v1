@@ -1,7 +1,11 @@
 domain=$(cat /usr/local/etc/xray/domain)
 user=trial-`echo $RANDOM | head -c4`
-uuid=$(cat /proc/sys/kernel/random/uuid)
+uuid=$(cat /proc/sys/kernel/random/uuid | md5sum | cut -c -10)
 masaaktif=1
+CHATID=$(grep -E "^#bot# " "/etc/bot/.bot.db" | cut -d ' ' -f 3)
+KEY=$(grep -E "^#bot# " "/etc/bot/.bot.db" | cut -d ' ' -f 2)
+export TIME="10"
+export URL="https://api.telegram.org/bot$KEY/sendMessage"
 echo ""
 echo ""
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
@@ -113,6 +117,14 @@ echo -e "━━━━━━━━━━━━━━━━━━━━━━━�
 echo " " | tee -a /user/log-trojan-$user.txt
 echo " " | tee -a /user/log-trojan-$user.txt
 echo " " | tee -a /user/log-trojan-$user.txt
+isi=(cat /user/log-trojan-$user.txt | jq -sRr @uri)
+CHATID="$CHATID"
+KEY="$KEY"
+TIME="$TIME"
+URL="$URL"
+TEXT="$isi
+"
+curl -s --max-time $TIME -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
 read -n 1 -s -r -p "Press any key to back on menu"
 clear
 trojan

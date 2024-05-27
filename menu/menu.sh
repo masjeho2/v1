@@ -62,10 +62,11 @@ echo -e " ${MB}[4]${NC} ${YB}Shadowsocks Menu${NC}"
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
 echo -e "                 ${WB}━━━━━ [ Utility ] ━━━━━${NC}                "
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
-echo -e " ${MB}[8]${NC} ${YB}Log Create Account${NC}    ${MB}[12]${NC} ${YB}Change Xray-core Mod${NC}"
-echo -e " ${MB}[9]${NC} ${YB}Speedtest${NC}             ${MB}[13]${NC} ${YB}Change Xray-core Official${NC}"
-echo -e " ${MB}[10]${NC} ${YB}Change Domain${NC}        ${MB}[14]${NC} ${YB}About Script${NC}"
-echo -e " ${MB}[11]${NC} ${YB}Cert Acme.sh${NC}"
+echo -e " ${MB}[8]${NC} ${YB}Log Create Account${NC}    ${MB}[13]${NC} ${YB}Change Xray-core Official${NC}"
+echo -e " ${MB}[9]${NC} ${YB}Speedtest${NC}             ${MB}[14]${NC} ${YB}Update Script${NC}"
+echo -e " ${MB}[10]${NC} ${YB}Change Domain${NC}        ${MB}[15]${NC} ${YB}Add Bot Telegram${NC}"
+echo -e " ${MB}[11]${NC} ${YB}Cert Acme.sh${NC}         ${MB}[16]${NC} ${YB}About Script${NC}"
+echo -e " ${MB}[12]${NC} ${YB}Change Xray-core Mod${NC} ${MB}[x]${NC} ${YB}Exit Script${NC}"
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
 echo -e ""
 echo -e " ${WB}Press [ ctrl + c ] or Input x To Exit Script${NC}"
@@ -86,7 +87,9 @@ case $opt in
 11) clear ; certxray ;;
 12) clear ; xraymod ;;
 13) clear ; xrayofficial ;;
-14) clear ; about ;;
+14) clear ; bash <(curl -fsSL https://raw.githubusercontent.com/masjeho2/v1/xray/update.sh) ;;
+15) clear ; bash <(curl -fsSL https://raw.githubusercontent.com/masjeho2/v1/xray/bot/add-bot.sh) ;;
+16) clear ; about ;;
 x) exit ;;
 *) echo -e "salah input" ; sleep 0.5 ; menu ;;
 esac

@@ -7,6 +7,10 @@ BB='\e[34;1m'
 MB='\e[35;1m'
 CB='\e[35;1m'
 WB='\e[37;1m'
+CHATID=$(grep -E "^#bot# " "/etc/bot/.bot.db" | cut -d ' ' -f 3)
+KEY=$(grep -E "^#bot# " "/etc/bot/.bot.db" | cut -d ' ' -f 2)
+export TIME="10"
+export URL="https://api.telegram.org/bot$KEY/sendMessage"
 clear
 domain=$(cat /usr/local/etc/xray/domain)
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
@@ -27,7 +31,7 @@ add-ss
 fi
 done
 cipher="aes-256-gcm"
-uuid=$(cat /proc/sys/kernel/random/uuid)
+uuid=$(cat /proc/sys/kernel/random/uuid | md5sum | cut -c -10)
 read -p "Expired (days): " masaaktif
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#shadowsocks$/a\#! '"$user $exp"'\
@@ -149,6 +153,14 @@ echo -e "━━━━━━━━━━━━━━━━━━━━━━━�
 echo " " | tee -a /user/log-ss-$user.txt
 echo " " | tee -a /user/log-ss-$user.txt
 echo " " | tee -a /user/log-ss-$user.txt
+isi=(`cat /user/log-ss-$user.txt`| jq -sRr @uri)
+CHATID="$CHATID"
+KEY="$KEY"
+TIME="$TIME"
+URL="$URL"
+TEXT="$isi
+"
+curl -s --max-time $TIME -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
 read -n 1 -s -r -p "Press any key to back on menu"
 clear
 shadowsocks
