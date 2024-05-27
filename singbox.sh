@@ -81,6 +81,7 @@ echo "UQ3w2q98BItd3DPgyctdoJw4cqQFmY59ppiDQdqMKbw=" > /etc/sing-box/serverpsk
 wget -q -O /etc/sing-box/config.json https://raw.githubusercontent.com/masjeho2/conf/main/singbox-config.json
 wget -q -O /etc/nginx/nginx.conf https://raw.githubusercontent.com/masjeho2/conf/main/nginx.conf
 wget -q -O /etc/nginx/conf.d/sing-box.conf https://raw.githubusercontent.com/masjeho2/conf/main/sing-box.conf
+wget -q -O /var/www/html/robots.txt https://raw.githubusercontent.com/masjeho2/conf/main/robots.txt
 systemctl restart nginx
 systemctl restart sing-box
 echo -e "${GB}[ INFO ]${NC} ${YB}Setup Done${NC}"
