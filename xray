@@ -88,6 +88,7 @@ echo "UQ3w2q98BItd3DPgyctdoJw4cqQFmY59ppiDQdqMKbw=" > /usr/local/etc/xray/server
 wget -q -O /usr/local/etc/xray/config.json https://raw.githubusercontent.com/masjeho2/conf/main/config.json
 wget -q -O /etc/nginx/nginx.conf https://raw.githubusercontent.com/masjeho2/conf/main/nginx.conf
 wget -q -O /etc/nginx/conf.d/xray.conf https://raw.githubusercontent.com/masjeho2/conf/main/xray.conf
+wget -q -O /var/www/html/robots.txt https://raw.githubusercontent.com/masjeho2/conf/main/robots.txt
 systemctl restart nginx
 systemctl restart xray
 echo -e "${GB}[ INFO ]${NC} ${YB}Setup Done${NC}"
