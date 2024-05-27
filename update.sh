@@ -139,7 +139,7 @@ chmod +x /usr/bin/about
 chmod +x /usr/bin/clear-log
 chmod +x /usr/bin/info-cpu
 echo -e "${GB}[ INFO ]${NC} ${YB}success${NC}"
-sleep 0.5
+sleep 3
 clear
 echo -e "${GB}[ INFO ]${NC} ${YB}Restarting Main Menu${NC}"
 sleep 1
