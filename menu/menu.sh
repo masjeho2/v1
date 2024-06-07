@@ -91,5 +91,6 @@ case $opt in
 15) clear ; bash <(curl -fsSL https://raw.githubusercontent.com/masjeho2/v1/xray/bot/add-bot.sh) ;;
 16) clear ; about ;;
 17) clear ; bash <(curl -fsSl https://raw.githubusercontent.com/masjeho2/v1/xray/other/bekup.sh) ;;
+x) exit ;;
 *) echo -e "salah input" ; sleep 0.5 ; menu ;;
 esac
