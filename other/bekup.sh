@@ -34,4 +34,7 @@ response=$(curl -s -o /dev/null -w "%{http_code}" -F "chat_id=$CHATID" -F "docum
 # Memeriksa apakah pengiriman file berhasil dan menghapus file lokal jika berhasil
 if [ "$response" -eq 200 ]; then
     rm -f "$backup_file"
+    echo -e "${GB}[ INFO ]${NC} ${YB}success${NC}"
 fi
+sleep 3
+menu
