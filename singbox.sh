@@ -102,6 +102,19 @@ iptables-save > /etc/iptables.up.rules
 iptables-restore -t < /etc/iptables.up.rules
 netfilter-persistent save
 netfilter-persistent reload
+echo "* soft nofile 1000000" >> /etc/security/limits.conf
+echo "* hard nofile 1000000" >> /etc/security/limits.conf
+echo "* soft nproc 1000000" >> /etc/security/limits.conf
+echo "* hard nproc 1000000" >> /etc/security/limits.conf
+echo "session required pam_limits.so" >> /etc/pam.d/common-session
+echo "session required pam_limits.so" >> /etc/pam.d/common-session-noninteractive
+ulimit -n 1000000
+ulimit -u 100000
+mkdir -p /etc/systemd/system/nginx.service.d/
+cat > /etc/systemd/system/nginx.service.d/override.conf << END
+[Service]
+LimitNOFILE=1000000
+END
 echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
 echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
 sed -i '/fs.file-max/d' /etc/sysctl.conf
@@ -136,6 +149,8 @@ net.core.netdev_max_backlog = 32768
 net.ipv4.tcp_timestamps = 0
 net.ipv4.tcp_max_orphans = 32768
 net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
+systemctl daemon-reload
+systemctl restart nginx
 cd /usr/bin
 echo -e "${GB}[ INFO ]${NC} ${YB}Downloading Main Menu${NC}"
 wget -q -O /usr/bin/menu "https://raw.githubusercontent.com/masjeho2/v1/sing-box/menu/menu.sh"
