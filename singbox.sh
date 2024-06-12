@@ -34,6 +34,22 @@ bash <(curl -fsSL https://sing-box.app/deb-install.sh)
 curl -s ipinfo.io/city >> /etc/sing-box/city
 curl -s ipinfo.io/org | cut -d " " -f 2-10 >> /etc/sing-box/org
 curl -s ipinfo.io/timezone >> /etc/sing-box/timezone
+cat > /etc/systemd/system/sing-box.service << END
+[Unit]
+Description=sing-box service
+Documentation=https://sing-box.sagernet.org
+After=network.target nss-lookup.target network-online.target
+[Service]
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE CAP_SYS_PTRACE CAP_DAC>
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE CAP_SYS_PTRACE CAP_DAC_R>
+ExecStart=/usr/bin/sing-box -D /var/lib/sing-box -C /etc/sing-box run
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+RestartSec=10s
+LimitNOFILE=infinity
+[Install]
+WantedBy=multi-user.target
+END
 clear
 sleep 1
 cd
@@ -151,6 +167,7 @@ net.ipv4.tcp_max_orphans = 32768
 net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
 systemctl daemon-reload
 systemctl restart nginx
+systemctl restart sing-box
 cd /usr/bin
 echo -e "${GB}[ INFO ]${NC} ${YB}Downloading Main Menu${NC}"
 wget -q -O /usr/bin/menu "https://raw.githubusercontent.com/masjeho2/v1/sing-box/menu/menu.sh"
