@@ -109,12 +109,25 @@ iptables-save > /etc/iptables.up.rules
 iptables-restore -t < /etc/iptables.up.rules
 netfilter-persistent save
 netfilter-persistent reload
-echo "* soft nofile 1000000" >> /etc/security/limits.conf
-echo "* hard nofile 1000000" >> /etc/security/limits.conf
-echo "* soft nproc 1000000" >> /etc/security/limits.conf
-echo "* hard nproc 1000000" >> /etc/security/limits.conf
-echo "session required pam_limits.so" >> /etc/pam.d/common-session
-echo "session required pam_limits.so" >> /etc/pam.d/common-session-noninteractive
+# Mengganti atau menambahkan entri di /etc/security/limits.conf
+sed -i '/^\*.*soft.*nofile/s/.*/* soft nofile 1000000/' /etc/security/limits.conf
+grep -q '^\*.*soft.*nofile' /etc/security/limits.conf || echo "* soft nofile 1000000" >> /etc/security/limits.conf
+
+sed -i '/^\*.*hard.*nofile/s/.*/* hard nofile 1000000/' /etc/security/limits.conf
+grep -q '^\*.*hard.*nofile' /etc/security/limits.conf || echo "* hard nofile 1000000" >> /etc/security/limits.conf
+
+sed -i '/^\*.*soft.*nproc/s/.*/* soft nproc 1000000/' /etc/security/limits.conf
+grep -q '^\*.*soft.*nproc' /etc/security/limits.conf || echo "* soft nproc 1000000" >> /etc/security/limits.conf
+
+sed -i '/^\*.*hard.*nproc/s/.*/* hard nproc 1000000/' /etc/security/limits.conf
+grep -q '^\*.*hard.*nproc' /etc/security/limits.conf || echo "* hard nproc 1000000" >> /etc/security/limits.conf
+
+# Menambahkan entri di /etc/pam.d/common-session jika belum ada
+grep -q '^session\s\+required\s\+pam_limits.so' /etc/pam.d/common-session || echo "session required pam_limits.so" >> /etc/pam.d/common-session
+
+# Menambahkan entri di /etc/pam.d/common-session-noninteractive jika belum ada
+grep -q '^session\s\+required\s\+pam_limits.so' /etc/pam.d/common-session-noninteractive || echo "session required pam_limits.so" >> /etc/pam.d/common-session-noninteractive
+
 ulimit -n 1000000
 ulimit -u 100000
 mkdir -p /etc/systemd/system/nginx.service.d/
