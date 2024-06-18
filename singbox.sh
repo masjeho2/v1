@@ -50,6 +50,7 @@ LimitNOFILE=infinity
 [Install]
 WantedBy=multi-user.target
 END
+
 clear
 sleep 1
 cd
@@ -99,6 +100,7 @@ wget -q -O /etc/nginx/nginx.conf https://raw.githubusercontent.com/masjeho2/conf
 wget -q -O /etc/nginx/conf.d/sing-box.conf https://raw.githubusercontent.com/masjeho2/conf/main/sing-box.conf
 wget -q -O /var/www/html/robots.txt https://raw.githubusercontent.com/masjeho2/conf/main/robots.txt
 systemctl restart nginx
+systemctl enable sing-box
 systemctl restart sing-box
 echo -e "${GB}[ INFO ]${NC} ${YB}Setup Done${NC}"
 sleep 2
