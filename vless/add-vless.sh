@@ -40,6 +40,8 @@ sed -i '/#vless-grpc$/a\#= '"$user $exp"'\
 vlesslink1="vless://$uuid@$domain:443?path=/vless&security=tls&encryption=none&host=$domain&type=ws&sni=$domain#$user"
 vlesslink2="vless://$uuid@$domain:80?path=/vless&security=none&encryption=none&host=$domain&type=ws#$user"
 vlesslink3="vless://$uuid@$domain:443?security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=$domain#$user"
+vlesslink4="vless://$uuid@$domain:443?path=/vless&security=tls&encryption=none&host=$domain&type=ws&sni=access.iflix.com#$user"
+vlesslink5="vless://$uuid@$domain:443?path=/vless&security=tls&encryption=none&host=$domain&type=ws&sni=static-web.prod.vidiocdn.com#$user"
 
 ISP=$(cat /etc/sing-box/org)
 CITY=$(cat /etc/sing-box/city)
@@ -160,6 +162,8 @@ echo -e "ServiceName   : vless-grpc" | tee -a /user/log-vless-$user.txt
 echo -e "Alpn          : h2, http/1.1" | tee -a /user/log-vless-$user.txt
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-vless-$user.txt
 echo -e "Link TLS      : $vlesslink1" | tee -a /user/log-vless-$user.txt
+echo -e "Link TLS iflix: $vlesslink4" | tee -a /user/log-vless-$user.txt
+echo -e "Link TLS video: $vlesslink5" | tee -a /user/log-vless-$user.txt
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-vless-$user.txt
 echo -e "Link NTLS     : $vlesslink2" | tee -a /user/log-vless-$user.txt
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-vless-$user.txt
