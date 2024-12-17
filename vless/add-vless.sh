@@ -30,7 +30,7 @@ read -n 1 -s -r -p "Press any key to back on menu"
 add-vless
 fi
 done
-uuid=$(cat /proc/sys/kernel/random/uuid | md5sum | cut -c -10)
+uuid=$(cat /proc/sys/kernel/random/uuid)
 read -p "Expired (days): " masaaktif
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vless$/a\#= '"$user $exp"'\
