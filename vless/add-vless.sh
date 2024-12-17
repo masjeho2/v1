@@ -40,6 +40,7 @@ sed -i '/#vless-grpc$/a\#= '"$user $exp"'\
 vlesslink1="vless://$uuid@$domain:443?path=/vless&security=tls&encryption=none&host=$domain&type=ws&sni=$domain#$user"
 vlesslink2="vless://$uuid@$domain:80?path=/vless&security=none&encryption=none&host=$domain&type=ws#$user"
 vlesslink3="vless://$uuid@$domain:443?security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=$domain#$user"
+
 ISP=$(cat /etc/sing-box/org)
 CITY=$(cat /etc/sing-box/city)
 cat > /var/www/html/vless/vless-$user.txt << END
@@ -127,6 +128,10 @@ ____________________________________________________
              _____ [ Link Vless ] _____
 ____________________________________________________
 Link TL   : vless://$uuid@$domain:443?path=/vless&security=tls&encryption=none&host=$domain&type=ws&sni=$domain#$user
+____________________________________________________
+Link TL   : vless://$uuid@$domain:443?path=/vless&security=tls&encryption=none&host=$domain&type=ws&sni=access.iflix.com#$user
+____________________________________________________
+Link TL   : vless://$uuid@$domain:443?path=/vless&security=tls&encryption=none&host=$domain&type=ws&sni=static-web.prod.vidiocdn.com#$user
 ____________________________________________________
 Link NTLS : vless://$uuid@$domain:80?path=/vless&security=none&encryption=none&host=$domain&type=ws#$user
 ____________________________________________________
