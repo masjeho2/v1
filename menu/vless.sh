@@ -27,38 +27,46 @@ echo -e ""
 case $opt in
     1)
         clear
-        nohup add-vless > add-vless.log 2>&1 &
-        echo -e "add-vless is running in the background. Check add-vless.log for details."
+        screen -dmS add-vless add-vless
+        echo -e "add-vless is running in the background."
+        exit
         ;;
     2)
         clear
-        nohup trialvless > trialvless.log 2>&1 &
-        echo -e "trialvless is running in the background. Check trialvless.log for details."
+        screen -dmS trialvless trialvless
+        echo -e "trialvless is running in the background."
+        exit
         ;;
     3)
         clear
-        nohup extend-vless > extend-vless.log 2>&1 &
-        echo -e "extend-vless is running in the background. Check extend-vless.log for details."
+        screen -dmS extend-vless extend-vless
+        echo -e "extend-vless is running in the background."
+        exit
         ;;
     4)
         clear
-        nohup del-vless > del-vless.log 2>&1 &
-        echo -e "del-vless is running in the background. Check del-vless.log for details."
+        screen -dmS del-vless del-vless
+        echo -e "del-vless is running in the background."
+        exit
         ;;
     5)
         clear
-        nohup cek-vless > cek-vless.log 2>&1 &
-        echo -e "cek-vless is running in the background. Check cek-vless.log for details."
+        screen -dmS cek-vless cek-vless
+        echo -e "cek-vless is running in the background."
+        exit
         ;;
     0)
         clear
         menu
+        exit
         ;;
     x)
         exit
         ;;
     *)
-        echo -e "Invalid input. Please try again."
+        echo -e "salah tekan "
+        sleep 1
+        vless
         ;;
 esac
 
