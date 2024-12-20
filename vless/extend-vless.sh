@@ -42,7 +42,7 @@ exp2=$(( (d1 - d2) / 86400 ))
 exp3=$(($exp2 + $masaaktif))
 exp4=`date -d "$exp3 days" +"%Y-%m-%d"`
 sed -i "/#= $user/c\#= $user $exp4" /etc/sing-box/config.json
-systemctl restart sing-box
+
 clear
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
 echo -e "           ${WB}Vless Account Success Extended${NC}           "
@@ -51,6 +51,8 @@ echo -e " ${YB}Client Name :${NC} $user"
 echo -e " ${YB}Expired On  :${NC} $exp4"
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
 echo ""
+sleep 2
+systemctl restart sing-box
 read -n 1 -s -r -p "Press any key to back on menu"
 clear
 vless
