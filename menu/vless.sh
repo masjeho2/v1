@@ -29,44 +29,36 @@ case $opt in
         clear
         nohup add-vless > add-vless.log 2>&1 &
         echo -e "add-vless is running in the background. Check add-vless.log for details."
-        exit
         ;;
     2)
         clear
         nohup trialvless > trialvless.log 2>&1 &
         echo -e "trialvless is running in the background. Check trialvless.log for details."
-        exit
         ;;
     3)
         clear
         nohup extend-vless > extend-vless.log 2>&1 &
         echo -e "extend-vless is running in the background. Check extend-vless.log for details."
-        exit
         ;;
     4)
         clear
         nohup del-vless > del-vless.log 2>&1 &
         echo -e "del-vless is running in the background. Check del-vless.log for details."
-        exit
         ;;
     5)
         clear
         nohup cek-vless > cek-vless.log 2>&1 &
         echo -e "cek-vless is running in the background. Check cek-vless.log for details."
-        exit
         ;;
     0)
         clear
         menu
-        exit
         ;;
     x)
         exit
         ;;
     *)
         echo -e "Invalid input. Please try again."
-        sleep 1
-        vless
         ;;
 esac
 
