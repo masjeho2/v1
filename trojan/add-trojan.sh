@@ -110,7 +110,7 @@ ____________________________________________________
 Link gRPC : trojan://${uuid}@$domain:443?security=tls&encryption=none&type=grpc&serviceName=trojan-grpc&sni=$domain#$user
 ____________________________________________________
 END
-systemctl restart sing-box
+
 clear
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-trojan-$user.txt
 echo -e "━━━━━ [ sing-box / Trojan ] ━━━━━" | tee -a /user/log-trojan-$user.txt
@@ -151,6 +151,8 @@ URL="$URL"
 TEXT="$isi
 "
 curl -s --max-time $TIME -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
+sleep 2
+systemctl restart sing-box
 read -n 1 -s -r -p "Press any key to back on menu"
 clear
 trojan

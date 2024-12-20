@@ -163,7 +163,7 @@ ____________________________________________________
 Link gRPC  : $sockslink3
 ____________________________________________________
 END
-systemctl restart sing-box
+
 clear
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-allsing-box-$user.txt
 echo -e "━━━━━ [ Trial ALL sing-box ] ━━━━━" | tee -a /user/log-allsing-box-$user.txt
@@ -233,5 +233,7 @@ TEXT="$isi
 "
 curl -s --max-time $TIME -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null)
 read -n 1 -s -r -p "Press any key to back on menu"
+sleep 2
+systemctl restart sing-box
 clear
 allsing-box

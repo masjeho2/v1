@@ -160,7 +160,7 @@ ____________________________________________________
 Link gRPC : vmess://$(echo $vlink3 | base64 -w 0)
 ____________________________________________________
 END
-systemctl restart sing-box
+
 clear
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-vmess-$user.txt
 echo -e "━━━━━ [ Trial sing-box / Vmess ] ━━━━━" | tee -a /user/log-vmess-$user.txt
@@ -203,6 +203,8 @@ URL="$URL"
 TEXT="$isi
 "
 curl -s --max-time $TIME -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
+sleep 2
+systemctl restart sing-box
 read -n 1 -s -r -p "Press any key to back on menu"
 clear
 vmess
