@@ -25,48 +25,12 @@ echo -e ""
 read -p " Select menu :  "  opt
 echo -e ""
 case $opt in
-    1)
-        clear
-        screen -dmS add-vless add-vless
-        echo -e "add-vless is running in the background."
-        exit
-        ;;
-    2)
-        clear
-        screen -dmS trialvless trialvless
-        echo -e "trialvless is running in the background."
-        exit
-        ;;
-    3)
-        clear
-        screen -dmS extend-vless extend-vless
-        echo -e "extend-vless is running in the background."
-        exit
-        ;;
-    4)
-        clear
-        screen -dmS del-vless del-vless
-        echo -e "del-vless is running in the background."
-        exit
-        ;;
-    5)
-        clear
-        screen -dmS cek-vless cek-vless
-        echo -e "cek-vless is running in the background."
-        exit
-        ;;
-    0)
-        clear
-        menu
-        exit
-        ;;
-    x)
-        exit
-        ;;
-    *)
-        echo -e "salah tekan "
-        sleep 1
-        vless
-        ;;
+1) clear ; add-vless ; exit ;;
+2) clear ; trialvless ; exit ;;
+3) clear ; extend-vless ; exit ;;
+4) clear ; del-vless ; exit ;;
+5) clear ; cek-vless ; exit ;;
+0) clear ; menu ; exit ;;
+x) exit ;;
+*) echo -e "salah tekan " ; sleep 1 ; vless ;;
 esac
-
