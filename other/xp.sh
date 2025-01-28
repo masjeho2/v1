@@ -41,3 +41,4 @@ process_data "#&@" "allsing-box"
 
 # Restart layanan sing-box
 systemctl restart sing-box
+systemctl daemon-reload
