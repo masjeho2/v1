@@ -31,7 +31,7 @@ process_data() {
             rm -f /var/www/html/$path/$path-$user-grpc.png
             rm -f /var/www/html/$path/$path-$user-iflix.png
             rm -f /var/www/html/$path/$path-$user-video.png
-            rm -rf /var/www/html/$path/$path-$user-opok.png
+            rm -f /var/www/html/$path/$path-$user-opok.png
 
 
         fi
