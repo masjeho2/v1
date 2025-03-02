@@ -30,18 +30,24 @@ read -n 1 -s -r -p "Press any key to back on menu"
 add-vless
 fi
 done
-uuid=$(cat /proc/sys/kernel/random/uuid)
+
+# Ask for UUID or generate a random one
+read -rp "Enter UUID (leave blank to generate a random UUID): " uuid
+if [ -z "$uuid" ]; then
+    uuid=$(cat /proc/sys/kernel/random/uuid)
+fi
+
 read -p "Expired (days): " masaaktif
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-sed -i '/#vless$/a\#= '"$user $exp"'\
+sed -i '/#vless$/a\#= '"$user $exp"'\ 
 },{"name": "'""$user""'", "uuid": "'""$uuid""'"' /etc/sing-box/config.json
-sed -i '/#vless-grpc$/a\#= '"$user $exp"'\
+sed -i '/#vless-grpc$/a\#= '"$user $exp"'\ 
 },{"name": "'""$user""'", "uuid": "'""$uuid""'"' /etc/sing-box/config.json
-vlesslink1="vless://$uuid@$domain:443?path=/vless&security=tls&encryption=none&host=$domain&type=ws&sni=$domain#$user"
-vlesslink2="vless://$uuid@$domain:80?path=/vless&security=none&encryption=none&host=$domain&type=ws#$user"
+vlesslink1="vless://$uuid@$domain:443?path=/vless-ws&security=tls&encryption=none&host=$domain&type=ws&sni=$domain#$user"
+vlesslink2="vless://$uuid@$domain:80?path=/vless-ws&security=none&encryption=none&host=$domain&type=ws#$user"
 vlesslink3="vless://$uuid@$domain:443?security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=$domain#$user"
-vlesslink4="vless://$uuid@$domain:443?path=/vless&security=tls&encryption=none&host=$domain&type=ws&sni=access.iflix.com#$user"
-vlesslink5="vless://$uuid@$domain:443?path=/vless&security=tls&encryption=none&host=$domain&type=ws&sni=static-web.prod.vidiocdn.com#$user"
+vlesslink4="vless://$uuid@$domain:443?path=/vless-ws&security=tls&encryption=none&host=$domain&type=ws&sni=access.iflix.com#$user"
+vlesslink5="vless://$uuid@$domain:443?path=/vless-ws&security=tls&encryption=none&host=$domain&type=ws&sni=static-web.prod.vidiocdn.com#$user"
 
 ISP=$(cat /etc/sing-box/org)
 CITY=$(cat /etc/sing-box/city)
@@ -123,19 +129,19 @@ ____________________________________________________
   servername: $domain
   skip-cert-verify: true
   grpc-opts:
-  grpc-service-name: "vless-grpc"
+    grpc-service-name: "vless-grpc"
 
 
 ____________________________________________________
              _____ [ Link Vless ] _____
 ____________________________________________________
-Link TL   : vless://$uuid@$domain:443?path=/vless&security=tls&encryption=none&host=$domain&type=ws&sni=$domain#$user
+Link TL   : vless://$uuid@$domain:443?path=/vless-ws&security=tls&encryption=none&host=$domain&type=ws&sni=$domain#$user
 ____________________________________________________
-Link TL   : vless://$uuid@$domain:443?path=/vless&security=tls&encryption=none&host=$domain&type=ws&sni=access.iflix.com#$user
+Link TL   : vless://$uuid@$domain:443?path=/vless-ws&security=tls&encryption=none&host=$domain&type=ws&sni=access.iflix.com#$user
 ____________________________________________________
-Link TL   : vless://$uuid@$domain:443?path=/vless&security=tls&encryption=none&host=$domain&type=ws&sni=static-web.prod.vidiocdn.com#$user
+Link TL   : vless://$uuid@$domain:443?path=/vless-ws&security=tls&encryption=none&host=$domain&type=ws&sni=static-web.prod.vidiocdn.com#$user
 ____________________________________________________
-Link NTLS : vless://$uuid@$domain:80?path=/vless&security=none&encryption=none&host=$domain&type=ws#$user
+Link NTLS : vless://$uuid@$domain:80?path=/vless-ws&security=none&encryption=none&host=$domain&type=ws#$user
 ____________________________________________________
 Link gRPC : vless://$uuid@$domain:443?security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=$domain#$user
 ____________________________________________________
