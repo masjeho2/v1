@@ -141,6 +141,28 @@ Link gRPC : vless://$uuid@$domain:443?security=tls&encryption=none&type=grpc&ser
 ____________________________________________________
 END
 
+echo " " | tee -a /user/log-vless-$user.txt
+isi=$(cat /user/log-vless-$user.txt | jq -sRr @uri)
+CHATID="$CHATID"
+KEY="$KEY"
+TIME="$TIME"
+URL="$URL"
+TEXT="$isi"
+curl -s --max-time $TIME -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
+# Generate QR code for each link
+qrencode -o /var/www/html/vless/vless-$user-tls.png "$vlesslink1"
+qrencode -o /var/www/html/vless/vless-$user-ntls.png "$vlesslink2"
+qrencode -o /var/www/html/vless/vless-$user-grpc.png "$vlesslink3"
+qrencode -o /var/www/html/vless/vless-$user-iflix.png "$vlesslink4"
+qrencode -o /var/www/html/vless/vless-$user-video.png "$vlesslink5"
+
+# Send QR codes to Telegram
+curl -s -X POST "https://api.telegram.org/bot$KEY/sendPhoto" -F chat_id="$CHATID" -F photo="@/var/www/html/vless/vless-$user-tls.png" -F caption="Link TLS: $vlesslink1"
+curl -s -X POST "https://api.telegram.org/bot$KEY/sendPhoto" -F chat_id="$CHATID" -F photo="@/var/www/html/vless/vless-$user-ntls.png" -F caption="Link NTLS: $vlesslink2"
+curl -s -X POST "https://api.telegram.org/bot$KEY/sendPhoto" -F chat_id="$CHATID" -F photo="@/var/www/html/vless/vless-$user-grpc.png" -F caption="Link gRPC: $vlesslink3"
+curl -s -X POST "https://api.telegram.org/bot$KEY/sendPhoto" -F chat_id="$CHATID" -F photo="@/var/www/html/vless/vless-$user-iflix.png" -F caption="Link TLS iflix: $vlesslink4"
+curl -s -X POST "https://api.telegram.org/bot$KEY/sendPhoto" -F chat_id="$CHATID" -F photo="@/var/www/html/vless/vless-$user-video.png" -F caption="Link TLS video: $vlesslink5"
+
 clear
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-vless-$user.txt
 echo -e "━━━━━ [ sing-box / Vless ] ━━━━━" | tee -a /user/log-vless-$user.txt
@@ -175,29 +197,6 @@ echo -e "Format Clash  : http://$domain:8000/vless/vless-$user.txt" | tee -a /us
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-vless-$user.txt
 echo -e "Expired On    : $exp" | tee -a /user/log-vless-$user.txt
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a /user/log-vless-$user.txt
-echo " " | tee -a /user/log-vless-$user.txt
-echo " " | tee -a /user/log-vless-$user.txt
-echo " " | tee -a /user/log-vless-$user.txt
-isi=$(cat /user/log-vless-$user.txt | jq -sRr @uri)
-CHATID="$CHATID"
-KEY="$KEY"
-TIME="$TIME"
-URL="$URL"
-TEXT="$isi"
-curl -s --max-time $TIME -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
-# Generate QR code for each link
-qrencode -o /var/www/html/vless/vless-$user-tls.png "$vlesslink1"
-qrencode -o /var/www/html/vless/vless-$user-ntls.png "$vlesslink2"
-qrencode -o /var/www/html/vless/vless-$user-grpc.png "$vlesslink3"
-qrencode -o /var/www/html/vless/vless-$user-iflix.png "$vlesslink4"
-qrencode -o /var/www/html/vless/vless-$user-video.png "$vlesslink5"
-
-# Send QR codes to Telegram
-curl -s -X POST "https://api.telegram.org/bot$KEY/sendPhoto" -F chat_id="$CHATID" -F photo="@/var/www/html/vless/vless-$user-tls.png" -F caption="Link TLS: $vlesslink1"
-curl -s -X POST "https://api.telegram.org/bot$KEY/sendPhoto" -F chat_id="$CHATID" -F photo="@/var/www/html/vless/vless-$user-ntls.png" -F caption="Link NTLS: $vlesslink2"
-curl -s -X POST "https://api.telegram.org/bot$KEY/sendPhoto" -F chat_id="$CHATID" -F photo="@/var/www/html/vless/vless-$user-grpc.png" -F caption="Link gRPC: $vlesslink3"
-curl -s -X POST "https://api.telegram.org/bot$KEY/sendPhoto" -F chat_id="$CHATID" -F photo="@/var/www/html/vless/vless-$user-iflix.png" -F caption="Link TLS iflix: $vlesslink4"
-curl -s -X POST "https://api.telegram.org/bot$KEY/sendPhoto" -F chat_id="$CHATID" -F photo="@/var/www/html/vless/vless-$user-video.png" -F caption="Link TLS video: $vlesslink5"
 
 sleep 2
 systemctl restart sing-box
