@@ -57,7 +57,7 @@ echo -e "━━━━━━━━━━━━━━━━━━━━━━━�
 echo ""
 
 # Send report to Telegram
-TEXT="Vless Account Extended\nClient Name: $user\nExpired On: $exp4"
+TEXT="Vless Account Extended Client Name: $user Expired On: $exp4"
 curl -s --max-time $TIME -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
 
 sleep 2
