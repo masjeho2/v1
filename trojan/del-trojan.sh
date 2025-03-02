@@ -37,7 +37,9 @@ exp=$(grep -wE "^#& $user" "/etc/sing-box/config.json" | cut -d ' ' -f 3 | sort 
 sed -i "/^#& $user $exp/,/^},{/d" /etc/sing-box/config.json
 rm -rf /var/www/html/trojan/trojan-$user.txt
 rm -rf /user/log-trojan-$user.txt
-
+rm -rf /var/www/html/trojan/trojan-$user-tls.png
+rm -rf /var/www/html/trojan/trojan-$user-ntls.png
+rm -rf /var/www/html/trojan/trojan-$user-grpc.png
 clear
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
 echo -e "           ${WB}Trojan Account Success Deleted${NC}           "

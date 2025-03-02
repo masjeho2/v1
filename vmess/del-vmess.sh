@@ -37,6 +37,10 @@ exp=$(grep -wE "^#@ $user" "/etc/sing-box/config.json" | cut -d ' ' -f 3 | sort 
 sed -i "/^#@ $user $exp/,/^},{/d" /etc/sing-box/config.json
 rm -rf /var/www/html/vmess/vmess-$user.txt
 rm -rf /user/log-vmess-$user.txt
+rm -rf /var/www/html/vmess/vmess-$user-tls.png
+rm -rf /var/www/html/vmess/vmess-$user-ntls.png
+rm -rf /var/www/html/vmess/vmess-$user-grpc.png
+rm -rf /var/www/html/vmess/vmess-$user-opok.png
 
 clear
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 

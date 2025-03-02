@@ -251,6 +251,19 @@ URL="$URL"
 TEXT="$isi
 "
 curl -s --max-time $TIME -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
+
+# Generate QR code for each link
+qrencode -o /var/www/html/vmess/vmess-$user-tls.png "$vmesslink1" >/dev/null 2>&1
+qrencode -o /var/www/html/vmess/vmess-$user-ntls.png "$vmesslink2" >/dev/null 2>&1
+qrencode -o /var/www/html/vmess/vmess-$user-grpc.png "$vmesslink3" >/dev/null 2>&1
+qrencode -o /var/www/html/vmess/vmess-$user-opok.png "$vmesslink4" >/dev/null 2>&1
+
+# Send QR codes to Telegram
+curl -s -X POST "https://api.telegram.org/bot$KEY/sendPhoto" -F chat_id="$CHATID" -F photo="@/var/www/html/vmess/vmess-$user-tls.png" -F caption="Link TLS: $vmesslink1" >/dev/null 2>&1
+curl -s -X POST "https://api.telegram.org/bot$KEY/sendPhoto" -F chat_id="$CHATID" -F photo="@/var/www/html/vmess/vmess-$user-ntls.png" -F caption="Link NTLS: $vmesslink2" >/dev/null 2>&1
+curl -s -X POST "https://api.telegram.org/bot$KEY/sendPhoto" -F chat_id="$CHATID" -F photo="@/var/www/html/vmess/vmess-$user-grpc.png" -F caption="Link gRPC: $vmesslink3" >/dev/null 2>&1
+curl -s -X POST "https://api.telegram.org/bot$KEY/sendPhoto" -F chat_id="$CHATID" -F photo="@/var/www/html/vmess/vmess-$user-opok.png" -F caption="Link opok: $vmesslink4" >/dev/null 2>&1
+
 sleep 2
 systemctl restart sing-box
 read -n 1 -s -r -p "Press any key to back on menu"
