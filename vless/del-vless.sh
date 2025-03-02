@@ -36,6 +36,11 @@ exp=$(grep -wE "^#= $user" "/etc/sing-box/config.json" | cut -d ' ' -f 3 | sort 
 sed -i "/^#= $user $exp/,/^},{/d" /etc/sing-box/config.json
 rm -rf /var/www/html/vless/vless-$user.txt
 rm -rf /user/log-vless-$user.txt
+rm -rf /var/www/html/vless/vless-$user-tls.png
+rm -rf /var/www/html/vless/vless-$user-ntls.png
+rm -rf /var/www/html/vless/vless-$user-grpc.png
+rm -rf /var/www/html/vless/vless-$user-iflix.png
+rm -rf /var/www/html/vless/vless-$user-video.png
 clear
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
 echo -e "            ${WB}Vless Account Success Deleted${NC}           "

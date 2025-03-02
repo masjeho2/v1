@@ -26,6 +26,11 @@ process_data() {
             sed -i "/^$prefix $user $exp/,/^},{/d" /etc/sing-box/config.json
             rm -f /var/www/html/$path/$path-$user.txt
             rm -f /user/log-$path-$user.txt
+            rm -f /var/www/html/$path/$path-$user-tls.png
+            rm -f /var/www/html/$path/$path-$user-ntls.png
+            rm -f /var/www/html/$path/$path-$user-grpc.png
+            rm -f /var/www/html/$path/$path-$user-iflix.png
+            rm -f /var/www/html/$path/$path-$user-video.png
         fi
     done
 }

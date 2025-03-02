@@ -20,7 +20,7 @@ apt dist-upgrade -y
 apt install socat curl screen cron screenfetch netfilter-persistent vnstat lsof fail2ban -y
 apt install sysstat -y
 apt install jq -y
-
+apt-get install qrencode -y
 mkdir /backup > /dev/null 2>&1
 mkdir /user > /dev/null 2>&1
 mkdir /tmp > /dev/null 2>&1
