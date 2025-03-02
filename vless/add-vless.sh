@@ -32,10 +32,20 @@ fi
 done
 
 # Ask for UUID or generate a random one
-read -rp "Enter UUID (leave blank to generate a random UUID): " uuid
-if [ -z "$uuid" ]; then
-    uuid=$(cat /proc/sys/kernel/random/uuid)
-fi
+while true; do
+    read -rp "Enter UUID (leave blank to generate a random UUID): " uuid
+    if [ -z "$uuid" ]; then
+        uuid=$(cat /proc/sys/kernel/random/uuid)
+        break
+    else
+        UUID_EXISTS=$(grep -w $uuid /etc/sing-box/config.json | wc -l)
+        if [[ ${UUID_EXISTS} == '0' ]]; then
+            break
+        else
+            echo -e "${YB}The UUID already exists, please enter a different UUID.${NC}"
+        fi
+    fi
+done
 
 read -p "Expired (days): " masaaktif
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
