@@ -50,11 +50,11 @@ sed -i '/#vless$/a\#= '"$user $exp"'\
 },{"name": "'""$user""'", "uuid": "'""$uuid""'"' /etc/sing-box/config.json
 sed -i '/#vless-grpc$/a\#= '"$user $exp"'\
 },{"name": "'""$user""'", "uuid": "'""$uuid""'"' /etc/sing-box/config.json
-vlesslink1="vless://$uuid@$domain:443?path=/vless&security=tls&encryption=none&host=$domain&type=ws&sni=$domain#$user"
-vlesslink2="vless://$uuid@$domain:80?path=/vless&security=none&encryption=none&host=$domain&type=ws#$user"
+vlesslink1="vless://$uuid@$domain:443?path=/vless-ws&security=tls&encryption=none&host=$domain&type=ws&sni=$domain#$user"
+vlesslink2="vless://$uuid@$domain:80?path=/vless-ws&security=none&encryption=none&host=$domain&type=ws#$user"
 vlesslink3="vless://$uuid@$domain:443?security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=$domain#$user"
-vlesslink4="vless://$uuid@$domain:443?path=/vless&security=tls&encryption=none&host=$domain&type=ws&sni=access.iflix.com#$user"
-vlesslink5="vless://$uuid@$domain:443?path=/vless&security=tls&encryption=none&host=$domain&type=ws&sni=static-web.prod.vidiocdn.com#$user"
+vlesslink4="vless://$uuid@$domain:443?path=/vless-ws&security=tls&encryption=none&host=$domain&type=ws&sni=access.iflix.com#$user"
+vlesslink5="vless://$uuid@$domain:443?path=/vless-ws&security=tls&encryption=none&host=$domain&type=ws&sni=static-web.prod.vidiocdn.com#$user"
 
 ISP=$(cat /etc/sing-box/org)
 CITY=$(cat /etc/sing-box/city)
@@ -75,7 +75,7 @@ Alt Port NTLS : 8080, 8880, 2052, 2082, 2086, 2095
 id            : $uuid
 Encryption    : none
 Network       : Websocket, gRPC
-Path          : /vless
+Path          : /vless-ws
 ServiceName   : vless-grpc
 Alpn          : h2, http/1.1
 ____________________________________________________
@@ -98,7 +98,7 @@ ____________________________________________________
   servername: $domain
   network: ws
   ws-opts:
-    path: /vless
+    path: /vless-ws
     headers:
       Host: $domain
 
@@ -117,7 +117,7 @@ ____________________________________________________
   skip-cert-verify: false
   network: ws
   ws-opts:
-    path: /vless
+    path: /vless-ws
     headers:
       Host: $domain
 
@@ -142,13 +142,13 @@ ____________________________________________________
 ____________________________________________________
              _____ [ Link Vless ] _____
 ____________________________________________________
-Link TL   : vless://$uuid@$domain:443?path=/vless&security=tls&encryption=none&host=$domain&type=ws&sni=$domain#$user
+Link TL   : vless://$uuid@$domain:443?path=/vless-ws&security=tls&encryption=none&host=$domain&type=ws&sni=$domain#$user
 ____________________________________________________
-Link TL   : vless://$uuid@$domain:443?path=/vless&security=tls&encryption=none&host=$domain&type=ws&sni=access.iflix.com#$user
+Link TL   : vless://$uuid@$domain:443?path=/vless-ws&security=tls&encryption=none&host=$domain&type=ws&sni=access.iflix.com#$user
 ____________________________________________________
-Link TL   : vless://$uuid@$domain:443?path=/vless&security=tls&encryption=none&host=$domain&type=ws&sni=static-web.prod.vidiocdn.com#$user
+Link TL   : vless://$uuid@$domain:443?path=/vless-ws&security=tls&encryption=none&host=$domain&type=ws&sni=static-web.prod.vidiocdn.com#$user
 ____________________________________________________
-Link NTLS : vless://$uuid@$domain:80?path=/vless&security=none&encryption=none&host=$domain&type=ws#$user
+Link NTLS : vless://$uuid@$domain:80?path=/vless-ws&security=none&encryption=none&host=$domain&type=ws#$user
 ____________________________________________________
 Link gRPC : vless://$uuid@$domain:443?security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=$domain#$user
 ____________________________________________________
