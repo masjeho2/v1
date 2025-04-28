@@ -32,6 +32,9 @@ process_data() {
             rm -f /var/www/html/$path/$path-$user-iflix.png
             rm -f /var/www/html/$path/$path-$user-video.png
             rm -f /var/www/html/$path/$path-$user-opok.png
+            rm -f /var/www/html/$path/$path-$user-facebook.png
+            rm -f /var/www/html/$path/$path-$user-instagram.png
+            rm -f /var/www/html/$path/$path-$user-wa.png
 
 
         fi

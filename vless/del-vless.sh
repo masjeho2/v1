@@ -41,6 +41,9 @@ rm -rf /var/www/html/vless/vless-$user-ntls.png
 rm -rf /var/www/html/vless/vless-$user-grpc.png
 rm -rf /var/www/html/vless/vless-$user-iflix.png
 rm -rf /var/www/html/vless/vless-$user-video.png
+rm -rf /var/www/html/vless/vless-$user-facebook.png
+rm -rf /var/www/html/vless/vless-$user-instagram.png
+rm -rf /var/www/html/vless/vless-$user-wa.png
 clear
 echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | lolcat -a -d 10 
 echo -e "            ${WB}Vless Account Success Deleted${NC}           "

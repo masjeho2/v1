@@ -55,6 +55,9 @@ vlesslink2="vless://$uuid@$domain:80?path=/vless-ws&security=none&encryption=non
 vlesslink3="vless://$uuid@$domain:443?security=tls&encryption=none&type=grpc&serviceName=vless-grpc&sni=$domain#$user"
 vlesslink4="vless://$uuid@$domain:443?path=/vless-ws&security=tls&encryption=none&host=$domain&type=ws&sni=access.iflix.com#$user"
 vlesslink5="vless://$uuid@$domain:443?path=/vless-ws&security=tls&encryption=none&host=$domain&type=ws&sni=static-web.prod.vidiocdn.com#$user"
+vlesslink6="vless://$uuid@$domain:443?path=/vless-ws&security=tls&encryption=none&host=$domain&type=ws&sni=edge-ig-mqtt-p4-shv-01-gua1.facebook.com#$user"
+vlesslink7="vless://$uuid@$domain:443?path=/vless-ws&security=tls&encryption=none&host=$domain&type=ws&sni=z-p15.www.instagram.com#$user"
+vlesslink8="vless://$uuid@ava.game.naver.com:443?path=/vless-ws&security=tls&encryption=none&host=ava.game.naver.com.$domain&type=ws&sni=ava.game.naver.com.$domain#$user"
 
 ISP=$(cat /etc/sing-box/org)
 CITY=$(cat /etc/sing-box/city)
@@ -205,6 +208,11 @@ qrencode -o /var/www/html/vless/vless-$user-ntls.png "$vlesslink2" >/dev/null 2>
 qrencode -o /var/www/html/vless/vless-$user-grpc.png "$vlesslink3" >/dev/null 2>&1
 qrencode -o /var/www/html/vless/vless-$user-iflix.png "$vlesslink4" >/dev/null 2>&1
 qrencode -o /var/www/html/vless/vless-$user-video.png "$vlesslink5" >/dev/null 2>&1
+qrencode -o /var/www/html/vless/vless-$user-facebook.png "$vlesslink6" >/dev/null 2>&1
+qrencode -o /var/www/html/vless/vless-$user-instagram.png "$vlesslink7" >/dev/null 2>&1
+qrencode -o /var/www/html/vless/vless-$user-wa.png "$vlesslink8" >/dev/null 2>&1
+
+
 
 # Send QR codes to Telegram
 curl -s -X POST "https://api.telegram.org/bot$KEY/sendPhoto" -F chat_id="$CHATID" -F photo="@/var/www/html/vless/vless-$user-tls.png" -F caption="Link TLS: $vlesslink1" >/dev/null 2>&1
@@ -212,6 +220,10 @@ curl -s -X POST "https://api.telegram.org/bot$KEY/sendPhoto" -F chat_id="$CHATID
 curl -s -X POST "https://api.telegram.org/bot$KEY/sendPhoto" -F chat_id="$CHATID" -F photo="@/var/www/html/vless/vless-$user-grpc.png" -F caption="Link gRPC: $vlesslink3" >/dev/null 2>&1
 curl -s -X POST "https://api.telegram.org/bot$KEY/sendPhoto" -F chat_id="$CHATID" -F photo="@/var/www/html/vless/vless-$user-iflix.png" -F caption="Link TLS iflix: $vlesslink4" >/dev/null 2>&1
 curl -s -X POST "https://api.telegram.org/bot$KEY/sendPhoto" -F chat_id="$CHATID" -F photo="@/var/www/html/vless/vless-$user-video.png" -F caption="Link TLS video: $vlesslink5" >/dev/null 2>&1
+curl -s -X POST "https://api.telegram.org/bot$KEY/sendPhoto" -F chat_id="$CHATID" -F photo="@/var/www/html/vless/vless-$user-facebook.png" -F caption="Link TLS facebook: $vlesslink6" >/dev/null 2>&1
+curl -s -X POST "https://api.telegram.org/bot$KEY/sendPhoto" -F chat_id="$CHATID" -F photo="@/var/www/html/vless/vless-$user-instagram.png" -F caption="Link TLS instagram: $vlesslink7" >/dev/null 2>&1
+curl -s -X POST "https://api.telegram.org/bot$KEY/sendPhoto" -F chat_id="$CHATID" -F photo="@/var/www/html/vless/vless-$user-wa.png" -F caption="Link TLS wa: $vlesslink8" >/dev/null 2>&1
+
 
 sleep 2
 systemctl restart sing-box
