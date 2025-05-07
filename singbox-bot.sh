@@ -32,7 +32,7 @@ rm /etc/sing-box/city > /dev/null 2>&1
 rm /etc/sing-box/org > /dev/null 2>&1
 rm /etc/sing-box/timezone > /dev/null 2>&1
 #bash <(curl -fsSL https://sing-box.app/deb-install.sh)
-weget https://github.com/SagerNet/sing-box/releases/download/v1.10.0/sing-box_1.10.0_linux_amd64.deb
+wget https://github.com/SagerNet/sing-box/releases/download/v1.10.0/sing-box_1.10.0_linux_amd64.deb
 apt install ./sing-box_1.10.0_linux_amd64.deb
 curl -s ipinfo.io/city >> /etc/sing-box/city
 curl -s ipinfo.io/org | cut -d " " -f 2-10 >> /etc/sing-box/org
