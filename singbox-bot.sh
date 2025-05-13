@@ -107,11 +107,11 @@ bash acme.sh --issue -d $domain --server letsencrypt --keylength ec-256 --fullch
 clear
 echo -e "${GB}[ INFO ]${NC} ${YB}Setup Nginx & sing-box Conf${NC}"
 echo "UQ3w2q98BItd3DPgyctdoJw4cqQFmY59ppiDQdqMKbw=" > /etc/sing-box/serverpsk
-wget -q -O /etc/sing-box/config.json https://raw.githubusercontent.com/masjeho2/bot-singbox/refs/heads/main/config.json?token=GHSAT0AAAAAAC42626YVCUTXSEWWS33KZVA2AYIQOA
+#wget -q -O /etc/sing-box/config.json https://raw.githubusercontent.com/masjeho2/bot-singbox/refs/heads/main/config.json?token=GHSAT0AAAAAAC42626YVCUTXSEWWS33KZVA2AYIQOA
 wget -q -O /etc/nginx/nginx.conf https://raw.githubusercontent.com/masjeho2/conf/main/nginx.conf
 wget -q -O /etc/nginx/conf.d/sing-box.conf https://raw.githubusercontent.com/masjeho2/conf/main/sing-box.conf
 wget -q -O /var/www/html/robots.txt https://raw.githubusercontent.com/masjeho2/conf/main/robots.txt
-wget -q -O /root/bot.js https://raw.githubusercontent.com/masjeho2/bot-singbox/refs/heads/main/bot6.js?token=GHSAT0AAAAAAC42626ZD4H4YJFP7UYGYVIW2AYJQRA
+#wget -q -O /root/bot.js https://raw.githubusercontent.com/masjeho2/bot-singbox/refs/heads/main/bot6.js?token=GHSAT0AAAAAAC42626ZD4H4YJFP7UYGYVIW2AYJQRA
 systemctl restart nginx
 systemctl enable sing-box
 systemctl restart sing-box
