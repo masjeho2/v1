@@ -15,6 +15,7 @@
       "tag": "api"
     },
     {
+      "tag": "vmess-ws",
       "listen": "127.0.0.1",
       "port": "10001",
       "protocol": "vmess",
@@ -33,6 +34,7 @@
       }
     },
     {
+      "tag": "vless-ws",
       "listen": "127.0.0.1",
       "port": "10002",
       "protocol": "vless",
@@ -43,7 +45,7 @@
       "streamSettings":{
         "network": "ws",
         "wsSettings": {
-          "path": "/vless",
+          "path": "/vless-ws",
           "alpn": [
             "h2",
             "http/1.1"
@@ -52,6 +54,7 @@
       }
     },
     {
+      "tag": "trojan-ws",
       "listen": "127.0.0.1",
       "port": "10003",
       "protocol": "trojan",
@@ -71,6 +74,7 @@
       }
     },
     {
+      "tag": "vmess-grpc",
       "listen": "127.0.0.1",
       "port": "20001",
       "protocol": "vmess",
@@ -89,6 +93,7 @@
       }
     },
     {
+      "tag": "vless-grpc",
       "listen": "127.0.0.1",
       "port": "20002",
       "protocol": "vless",
@@ -108,6 +113,7 @@
       }
     },
     {
+      "tag": "trojan-grpc",
       "listen": "127.0.0.1",
       "port": "20003",
       "protocol": "trojan",
