@@ -329,7 +329,12 @@ fi
 fi
 mesg n || true
 clear
-menu
+
+# Display system information using neofetch
+neofetch
+
+# Prompt user to type "menu"
+echo "Please type 'menu' to continue."
 END
 chmod 644 /root/.profile
 clear
