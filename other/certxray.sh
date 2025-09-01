@@ -30,6 +30,7 @@ sleep 2
 echo -e "${GB}[ INFO ]${NC} ${YB}Starting service $Cek${NC} "
 sleep 2
 echo "$domain" > /usr/local/etc/xray/domain
+cat /usr/local/etc/xray/fullchain.crt /usr/local/etc/xray/private.key > /etc/haproxy/certs/domain.pem
 systemctl restart $Cek
 systemctl restart nginx
 echo -e "${GB}[ INFO ]${NC} ${YB}All finished...${NC} "
